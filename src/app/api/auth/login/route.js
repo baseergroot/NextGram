@@ -23,7 +23,7 @@ export async function POST(req) {
     console.log("incorrect password")
     return NextResponse.json({success: false, ErrorMessage: "username or password are incorrect"})
   }
-  const token = sign({name: user?.name, username, email: user?.email}, process.env.JWT_SECRET)
+  const token = sign({name: user?.name, username, email: user?.email, id: user?._id}, process.env.JWT_SECRET)
   cookie.set("token", token, {
     httpOnly: true
   })

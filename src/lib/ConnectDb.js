@@ -6,7 +6,7 @@ const ConnectDB = async () => {
     console.log("please provide database url ")
     return
   }
-  if(connections[0].readyState) {
+  if(connections[0].readyState === 1) {
     console.log("db, already connected")
     return
   }

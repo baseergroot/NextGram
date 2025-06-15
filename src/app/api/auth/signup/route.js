@@ -7,7 +7,7 @@ import { genSalt, hash } from 'bcrypt';
 
 export async function POST(req) {
   const {name, username, email, password} = await req.json()
-  console.log("route:", {name, username, email, password});
+  console.log("route:", {name, username, email});
   
   const cookie = await cookies()
   const salt = await genSalt(10);
@@ -20,9 +20,10 @@ export async function POST(req) {
     return NextResponse.json({success: false, userExistMessage: "User  Already Exist"})
   }
 
-  await User.create({name, username, email, password: hashedPassword})
+  const user = await User.create({name, username, email, password: hashedPassword})
+  // console.log({user})
 
-  const token = sign({name, username, email}, process.env.JWT_SECRET)
+  const token = sign({name, username, email, id: user?._id}, process.env.JWT_SECRET)
   cookie.set("token", token, {
     httpOnly: true
   })

@@ -1,14 +1,18 @@
-import { FaRegHeart } from "react-icons/fa";
-import { FaRegCommentDots } from "react-icons/fa";
+"use client"
 
-const FeedDetails = () => {
+import { FaRegCommentDots } from "react-icons/fa";
+import Like from "../actionButtons/like";
+import { useState } from "react";
+
+const FeedDetails = ({postId, likes}) => {
+  const [likecount, setLikeCount] = useState()
   return (
-    <section className=" h-[15%] flex flex-col gap-3 px-3">
+    <section className=" h-[15%] flex flex-col gap-2 justify-between px-3">
       <p className="font-bold">watch my moves</p>
       <div className="flex gap-10 text-2xl">
         <div className="flex items-center gap-2">
-          <FaRegHeart />
-          <span className="text-[20px]">23</span>
+          <Like postId={postId}/>
+          <span className="text-[20px]">{likes}</span>
         </div>
         <div className="flex items-center gap-2">
           <FaRegCommentDots className="" />

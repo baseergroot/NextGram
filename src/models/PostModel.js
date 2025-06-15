@@ -1,15 +1,14 @@
 import mongoose from  "mongoose";
 
 
-const reelSchema = new mongoose.Schema({
+const postSchema = new mongoose.Schema({
   title: String,
   file: String,
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  // default: [],
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
 })
 
-const Reel = mongoose.models.Reel || mongoose.model("Reel", reelSchema)
+const Post = mongoose.models.Post || mongoose.model("Post", postSchema)
 
-export default Reel
+export default Post

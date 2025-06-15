@@ -1,8 +1,6 @@
-import mongoose, { model, models, Schema } from "mongoose"
+import mongoose, { model, models, Schema, Types } from "mongoose";
 
-
-const UserSchema = new Schema(
-  {
+const UserSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -12,7 +10,7 @@ const UserSchema = new Schema(
     required: true,
   },
   email: {
-    type: String
+    type: String,
   },
   password: {
     type: String,
@@ -20,28 +18,29 @@ const UserSchema = new Schema(
     required: true,
   },
   profilePic: {
-    type: String
+    type: String,
+    default:
+      "https://asset.cloudinary.com/dyay3p5th/6b43af850633d6ef07f3883b93797f51",
   },
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Reel",
-    }
+      ref: "Post",
+    },
   ],
   saved: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Reel"
-    }
+      ref: "Post",
+    },
   ],
-  followers: [{ type: String}],
+  followers: [{ type: Types.ObjectId, ref: "User" }],
   followedByCurrentUser: {
     type: Boolean,
-    default: false
+    default: false,
   },
-  followings: [{ type: String, default: [] }],
-}
-)
+  followings: [{ type: Types.ObjectId, ref: "User" }],
+});
 
-const User = models.User || model("User", UserSchema)
-export default User
+const User = models.User || model("User", UserSchema);
+export default User;
