@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const FeedHeader = ({ name, username }) => {
   return (
-    <section className=" h-[15%] flex items-center gap-4 px-3">
+    <section className=" h-[13%] flex items-center gap-5 px-3">
       <div>
         <Image src="logo.svg" alt="profile" width={40} height={40} />
       </div>

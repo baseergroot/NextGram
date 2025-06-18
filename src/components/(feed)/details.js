@@ -10,7 +10,7 @@ const FeedDetails = ({postId, likesCount}) => {
   
   return (
 
-    <section className=" h-[12%]  flex flex-col justify-between px-3">
+    <section className=" h-[12%]  flex flex-col justify-between px-3 mb-4">
       <p className="font-bold">watch my moves</p>
       <div className="flex gap-10 text-2xl">
         <div className="flex items-center gap-2">
