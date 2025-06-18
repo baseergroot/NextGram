@@ -4,8 +4,10 @@ import FeedDetails from "@/components/(feed)/details";
 import FeedHeader from "@/components/(feed)/header";
 import BottomNavbar from "@/components/BottomNavbar"
 import NavbarComponent from "@/components/Navbar"
+import { LikeProvider } from "@/lib/LikesContext";
 import axios from "axios";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, Suspense, useEffect, useState } from "react";
+
 
 const Feed = () => {
     const [posts, setPosts] = useState([])
@@ -20,17 +22,21 @@ const Feed = () => {
     return (
         <div className="">
         <NavbarComponent />
-            <main className="aspect-6/8 mb-10">
+            <Suspense fallback={<p>Loading feed...</p>}>
+                <main className="aspect-6/8 mb-10">
               {
                 posts.map(post => (
                 <Fragment key={post._id}>
                     <FeedHeader name={post.createdBy.name} username={post.createdBy.username}/>
                     <FeedContent file={post.file}/>
-                    <FeedDetails  postId={post._id} likes={post.likes.length}/>
+                    <LikeProvider initialLikes={post.likes.length}>
+                    <FeedDetails  postId={post._id} likesCount={post.likes.length}/>
+                    </LikeProvider>
                 </Fragment>
                 ))
               }
             </main>
+            </Suspense>
         <BottomNavbar />
         </div>
     )

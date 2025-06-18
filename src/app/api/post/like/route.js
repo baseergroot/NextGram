@@ -13,10 +13,10 @@ export async function POST(req) {
   const post = await Post.findById(postId)
   if (post.likes.includes(decode.id)) {
     console.log("already Liked")
-    const updatedPost = await Post.findByIdAndUpdate(postId, {$pull: {likes: decode.id}})
-    return NextResponse.json({ok: true, message: "unliked"})
+    const updatedPost = await Post.findByIdAndUpdate(postId, {$pull: {likes: decode.id}}, { new: true })
+    return NextResponse.json({ok: true, message: "unliked", updatedPost})
   }
   console.log("not liked yet")
-  const updatedPost = await Post.findByIdAndUpdate(postId, {$push: {likes: decode.id}})
-  return NextResponse.json({ok: true, message: "liked"})
+  const updatedPost = await Post.findByIdAndUpdate(postId, {$push: {likes: decode.id}}, { new: true })
+  return NextResponse.json({ok: true, message: "liked", updatedPost})
 }

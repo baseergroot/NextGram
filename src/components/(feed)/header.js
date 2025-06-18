@@ -6,7 +6,7 @@ const FeedHeader = ({ name, username }) => {
       <div>
         <Image src="logo.svg" alt="profile" width={40} height={40} />
       </div>
-      <div className="leading-4">
+      <div className="leading-5">
         <h2 className="font-bold">{name}</h2>
         <h3 className="text-black/90">{username}</h3>
       </div>
