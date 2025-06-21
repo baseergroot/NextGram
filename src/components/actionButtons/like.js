@@ -5,8 +5,8 @@ import axios from 'axios'
 import React from 'react'
 import { IoMdHeartEmpty } from 'react-icons/io'
 
-const Like = ({postId, likesCount}) => {
-  const { likesContext, setLikes } = useLike(likesCount);
+const Like = ({postId}) => {
+  const { setLikes } = useLike();
   const LikePost = postId => {
     console.log("postid", postId)
     axios.post("/api/post/like", {postId: postId.toString()})

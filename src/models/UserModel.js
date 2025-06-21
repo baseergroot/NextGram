@@ -20,7 +20,7 @@ const UserSchema = new Schema({
   profilePic: {
     type: String,
     default:
-      "https://asset.cloudinary.com/dyay3p5th/6b43af850633d6ef07f3883b93797f51",
+      "https://res.cloudinary.com/dyay3p5th/image/upload/v1749750096/rt9qjllvlinzkffpsbpr.png",
   },
   posts: [
     {

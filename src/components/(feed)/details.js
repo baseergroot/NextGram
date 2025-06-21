@@ -2,11 +2,10 @@
 
 import { FaRegCommentDots } from "react-icons/fa";
 import Like from "../actionButtons/like";
-import { useEffect, useState } from "react";
-import { LikeProvider, useLike } from "@/lib/LikesContext";
+import { useLike } from "@/lib/LikesContext";
 
 const FeedDetails = ({postId, likesCount}) => {
-  const { likes, setLikes } = useLike();
+  const { likes } = useLike();
   
   return (
 
@@ -14,7 +13,7 @@ const FeedDetails = ({postId, likesCount}) => {
       <p className="font-bold">watch my moves</p>
       <div className="flex gap-10 text-2xl">
         <div className="flex items-center gap-2">
-          <Like postId={postId} likesCount={likesCount}/>
+          <Like postId={postId} />
           <span className="text-[20px]">{likes}</span>
         </div>
         <div className="flex items-center gap-2">
@@ -29,3 +28,4 @@ const FeedDetails = ({postId, likesCount}) => {
 };
 
 export default FeedDetails;
+// likesCount={likesCount}

@@ -30,7 +30,7 @@ const Feed = () => {
                     <FeedHeader name={post.createdBy.name} username={post.createdBy.username}/>
                     <FeedContent file={post.file}/>
                     <LikeProvider initialLikes={post.likes.length}>
-                    <FeedDetails  postId={post._id} likesCount={post.likes.length}/>
+                    <FeedDetails  postId={post._id}/>
                     </LikeProvider>
                 </Fragment>
                 ))
