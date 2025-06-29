@@ -1,3 +1,5 @@
+"use client"
+import axios from "axios";
 import {
   Avatar,
   Dropdown,
@@ -10,8 +12,10 @@ import {
   NavbarLink,
   NavbarToggle,
 } from "flowbite-react";
+import { useRouter } from "next/navigation";
 
-const NavbarComponent = () => {
+const NavbarComponent = ({ profilePic }) => {
+  const router = useRouter()
   return (
     <Navbar fluid rounded className="px-5">
       <NavbarBrand href="/logo.svg">
@@ -23,7 +27,7 @@ const NavbarComponent = () => {
           arrowIcon={false}
           inline
           label={
-            <Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded />
+            <Avatar alt="User settings" img={profilePic} rounded className="object-cover"/>
           }
         >
           <DropdownHeader>
@@ -33,7 +37,11 @@ const NavbarComponent = () => {
           <DropdownItem href="/search">Search</DropdownItem>
           <DropdownItem>Settings</DropdownItem>
           <DropdownDivider />
-          <DropdownItem>Sign out</DropdownItem>
+          <DropdownItem onClick={() => {
+            axios.get("/api/auth/logout")
+            .then(() => router.push("/"))
+          }}>
+          Sign out</DropdownItem>
         </Dropdown>
         {/* <NavbarToggle className="hidden"/> */}
       </div>

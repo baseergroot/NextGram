@@ -11,18 +11,23 @@ import { Fragment, Suspense, useEffect, useState } from "react";
 
 const Feed = () => {
     const [posts, setPosts] = useState([])
+    const [profilePic, setProfilePic] = useState()
 
     useEffect(() => {
         axios.get("/api/feed")
     .then(res => {
         setPosts(res.data.posts)
-        console.log(res.data.posts)
+        setProfilePic(res.data.profilePic)
+        console.log(res.data.posts[0])
     }).catch(err => console.log("error is", err))
     },[])
+
+    if (posts.length == 0) {
+        return "Loading..."
+    }
     return (
         <div className="">
-        <NavbarComponent />
-            <Suspense fallback={<p>Loading feed...</p>}>
+        <NavbarComponent profilePic={profilePic}/>
                 <main className="aspect-6/8 mb-10">
               {
                 posts.map(post => (
@@ -30,13 +35,12 @@ const Feed = () => {
                     <FeedHeader name={post.createdBy.name} username={post.createdBy.username}/>
                     <FeedContent file={post.file}/>
                     <LikeProvider initialLikes={post.likes.length}>
-                    <FeedDetails  postId={post._id}/>
+                    <FeedDetails  postId={post._id} title={post.title} saves={post.saved.length} comments={post.comments}/>
                     </LikeProvider>
                 </Fragment>
                 ))
               }
             </main>
-            </Suspense>
         <BottomNavbar />
         </div>
     )

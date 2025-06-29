@@ -6,7 +6,7 @@ import loggedInUser from "@/lib/getLoggedInUser"
 
 export async function POST(req) {
   const {title, file} = await req.json()
-  // console.log({title, file})
+  console.log({title, file})
   const decode = await loggedInUser()
   console.log({decode})
 

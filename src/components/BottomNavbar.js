@@ -17,11 +17,11 @@ const BottomNavbar = () => {
       <Link href="/post/create">
         <IoMdAdd href="/create" className="text-white bg-black rounded" />
       </Link>
-      <Link href="/post/saved">
-        <AiOutlineSave href="/save" />
+      <Link href="/user/save">
+        <AiOutlineSave />
       </Link>
       <Link href="/user/profile">
-        <CgProfile href="/profile" />
+        <CgProfile />
       </Link>
     </nav>
   );

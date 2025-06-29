@@ -1,8 +1,12 @@
 import { cookies } from "next/headers"
 import { verify } from "jsonwebtoken"
-import { redirect } from "next/navigation"
-import { NextResponse } from "next/server"
 
+export interface Decode {
+    name: string,
+    username: string,
+    email: string,
+    id: string
+}
 
 const loggedInUser = async () => {
   const cookie = await cookies()
@@ -11,8 +15,8 @@ const loggedInUser = async () => {
       console.log("you are not loggen in")
     }
 
-    const decode = verify(token.value, process.env.JWT_SECRET)
-    console.log({decode})
+    const decode:Decode = verify(token.value, process.env.JWT_SECRET)
+    // console.log({decode})
 
     return decode
 }

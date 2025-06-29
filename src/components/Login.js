@@ -2,9 +2,11 @@
 import axios from "axios";
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function Login() {
+  const router = useRouter()
   const [authError, setAuthError] = useState()
     const Submit = (e) => {
         const Logindata = {
@@ -17,6 +19,9 @@ export function Login() {
           console.log(res.data.passwordError) 
           setAuthError(res.data.ErrorMessage)
           console.log("autherror", authError)
+          if (!authError) {
+            router.push("/feed")
+          }
         })
         .catch(err => console.log(err))
     }

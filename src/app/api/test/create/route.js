@@ -1,28 +1,39 @@
 import { NextResponse } from "next/server"
-import { v2 as cloudinary } from 'cloudinary';
+import path from "path"
+import fs from 'fs/promises';
+import {v2 as cloudnary} from "cloudinary"
 
-cloudinary.config({
+cloudnary.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
   api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 export async function POST(req) {
-   const formData = await req.formData(); // ✅ This is correct
-  const file = formData.get("file");
-  console.log("route: ", file)
+   const formData = await req.formData();
+  const file = formData.get('file');
+  const name = formData.get("name")
+  const username = formData.get("username")
 
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const base64String = `data:${file.type};base64,${buffer.toString("base64")}`;
-
-    try {
-    const uploadRes = await cloudinary.uploader.upload(base64String, {
-      folder: "nextgram", // optional folder
-    });
-
-    return NextResponse.json({ success: true, url: uploadRes.secure_url });
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json({ success: false, error: err.message });
+  if (!file) {
+    return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
   }
+
+  console.log(file, name, username)
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+  // console.log("bytes: ", bytes)
+  // console.log("buffer: ", buffer)
+  const cloudForm = new FormData()
+  cloudForm.append("file", buffer, file.name)
+  cloudForm.append("upload_preset", "nextgram")
+
+  const res = axios.post(
+      process.env.NEXT_PUBLIC_CLOUDNARY_IMAGE_URL,
+      formData
+    )
+
+  console.log(res.data.secure_url)
+
+  return NextResponse.json({ message: 'File uploaded', url: result.secure_url});
 }

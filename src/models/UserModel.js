@@ -31,8 +31,9 @@ const UserSchema = new Schema({
   saved: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
-    },
+      ref: "Post"
+    }
+    
   ],
   followers: [{ type: Types.ObjectId, ref: "User" }],
   followedByCurrentUser: {
