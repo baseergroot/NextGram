@@ -8,6 +8,7 @@ export interface UserI {
   email?: string,
   password?: string,
   profilePic?: string,
+  bio?: string | null,
   posts?: PostI[] | string[],
   saved?: PostI[] | string[],
   followers?: UserI[] | string[],

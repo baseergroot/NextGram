@@ -39,7 +39,6 @@ const NavbarComponent = ({ profilePic }) => {
           <DropdownDivider />
           <DropdownItem onClick={() => {
             axios.get("/api/auth/logout")
-            .then(() => router.push("/"))
           }}>
           Sign out</DropdownItem>
         </Dropdown>

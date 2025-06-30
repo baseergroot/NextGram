@@ -1,4 +1,5 @@
 "use client";
+import BottomNavbar from "@/components/BottomNavbar";
 import axios from "axios";
 import { Button, FileInput, Label, Textarea } from "flowbite-react";
 import { useState } from "react";
@@ -61,6 +62,7 @@ export default function Create() {
           Post
         </Button>
       </form>
+      <BottomNavbar />
     </>
   );
 }

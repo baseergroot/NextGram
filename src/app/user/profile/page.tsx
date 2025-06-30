@@ -4,13 +4,15 @@ import NavbarComponent from '@/components/Navbar';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { UserDetails } from "@/types/userDetails";
 import { Suspense } from 'react';
 import Image from 'next/image';
+import { UserI } from '@/types/UserType';
+import { useRouter } from 'next/router';
+import BottomNavbar from "@/components/BottomNavbar"
 
 export default function SocialMediaProfile() {
   const [activeTab, setActiveTab] = useState<string>('posts');
-  const [user, setUser] = useState<UserDetails | undefined>()
+  const [user, setUser] = useState<UserI>()
 
   const stats: { number: number; label: string }[] = [
     { number: user?.posts.length, label: 'Posts' },
@@ -44,9 +46,9 @@ export default function SocialMediaProfile() {
         
         <button 
           className="bg-gray-900 text-white px-10 py-3 rounded-full text-base font-semibold hover:bg-gray-700 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg mb-6"
-          onClick={() => console.log('Follow clicked')}
+          onClick={() => useRouter().push("/user/profile/edit")}
         >
-          Follow
+          Edit
         </button>
         
         {/* Stats */}
@@ -65,8 +67,9 @@ export default function SocialMediaProfile() {
 
       {/* Bio */}
       <div className="px-5 pb-5 text-center text-gray-700 text-sm leading-relaxed">
-        Sharing my journey through captivating visuals and stories. Let's connect and inspire each other!
+    {user?.bio ? user.bio : "edit profile"}
       </div>
+
 
       {/* Navigation Tabs */}
       <nav className="flex border-b border-gray-100 bg-white">
@@ -92,18 +95,19 @@ export default function SocialMediaProfile() {
       </nav>
 
       {/* Content Grid */}
-      <div className="grid grid-cols-2 gap-0.5 p-5 bg-gray-50">
+      <div className="grid grid-cols-2 gap-0.5 p-5 bg-gray-50 mb-15">
         {!user ? "no post to see" : user.posts?.map((item) => (
           <div
             key={item._id}
-            className="aspect-square bg-gray-200 rounded-xl flex items-center justify-center text-4xl text-gray-600 font-bold cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-gray-300"
+            className="aspect-square bg-gray-200 rounded-xl flex items-center justify-center text-4xl text-gray-600 font-bold cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-gray-300 "
             onClick={() => console.log(`Content item ${item.file} clicked`)}
           >
-            <Image src={item.file} alt='post' width={100} height={100} className=' h-full'></Image>
+            <Image src={item.file} alt='post' width={100} height={100} className=' h-full object-contain w-full rounded-xl p-1'></Image>
             
           </div>
         ))}
       </div>
+      <BottomNavbar  />
     </div>
   );
 }

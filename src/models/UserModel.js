@@ -22,6 +22,7 @@ const UserSchema = new Schema({
     default:
       "https://res.cloudinary.com/dyay3p5th/image/upload/v1749750096/rt9qjllvlinzkffpsbpr.png",
   },
+  bio: String,
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
