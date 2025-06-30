@@ -8,7 +8,7 @@ const Hero = () => {
                     Welcome to <span className="text-blue-600">Nextgram</span>
                 </h1>
                 <p className="text-gray-600 dark:text-gray-300 text-lg mb-6">
-                    Inspired by Instagram, <strong>Nextgram</strong> is a clean and minimal social feed built with modern web technologies. Whether you're sharing moments or exploring posts from others, Nextgram keeps it fast, focused, and familiar.
+                    Inspired by Instagram, <strong>Nextgram</strong> is a clean and minimal social feed built with modern web technologies. Whether you&apos;re sharing moments or exploring posts from others, Nextgram keeps it fast, focused, and familiar.
                 </p>
                 <p className="text-gray-500 dark:text-gray-400 text-base mb-8">
                     Powered by Next.js, Tailwind CSS, and a passion for simplicity.

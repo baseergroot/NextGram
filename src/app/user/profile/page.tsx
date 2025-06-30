@@ -7,10 +7,11 @@ import { useEffect } from 'react';
 import { Suspense } from 'react';
 import Image from 'next/image';
 import { UserI } from '@/types/UserType';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import BottomNavbar from "@/components/BottomNavbar"
 
 export default function SocialMediaProfile() {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState<string>('posts');
   const [user, setUser] = useState<UserI>()
 
@@ -46,7 +47,7 @@ export default function SocialMediaProfile() {
         
         <button 
           className="bg-gray-900 text-white px-10 py-3 rounded-full text-base font-semibold hover:bg-gray-700 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg mb-6"
-          onClick={() => useRouter().push("/user/profile/edit")}
+          onClick={() => router.push("/user/profile/edit")}
         >
           Edit
         </button>

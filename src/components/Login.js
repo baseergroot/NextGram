@@ -52,7 +52,7 @@ export function Login() {
           {/* <Label htmlFor="remember">Remember me</Label> */}
         </div>
         <Button type="submit">Submit</Button>
-        <p>Don't have an account yet? {" "} <Link className="underline px-1 text-blue-500" href="/signup">SignUp</Link> </p>
+        <p>Don&apos;t have an account yet? {" "} <Link className="underline px-1 text-blue-500" href="/signup">SignUp</Link> </p>
       </form>
     </Card>
   );
