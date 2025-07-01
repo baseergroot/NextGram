@@ -131,7 +131,10 @@ const Post = () => {
                     postid: postDetail._id.toString(),
                     content: replyText
                   })
-                  .then(res => setComments(res.data.post.comments.reverse()))
+                  .then(res => {
+                    setComments(res.data.post.comments.reverse())
+                    console.log(res.data.post.comments)
+                  })
                   .catch(err => console.log(err))
                   setReplyText("")
                 }}>

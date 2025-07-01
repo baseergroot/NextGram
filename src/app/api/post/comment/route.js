@@ -24,7 +24,7 @@ export async function POST(request) {
   const post = await Post.findByIdAndUpdate(data.postid, {$push: {comments: comment._id}}, {new: true})
   .populate({
     path: "comments",
-    select: "_id post content createdBy",
+    select: "_id post content createdBy likes",
     populate: {
       path: "createdBy",
       select: "name username profilePic"
