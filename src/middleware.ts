@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
 
   if (authRoutes.includes(currentPathName) && token) {
     // console.log("already logged in redirecting to /")
-    return NextResponse.redirect(new URL("/", request.url))
+    return NextResponse.redirect(new URL("/feed", request.url))
   }
 
   return NextResponse.next()

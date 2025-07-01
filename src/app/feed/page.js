@@ -32,7 +32,7 @@ const Feed = () => {
               {
                 posts.map(post => (
                 <Fragment key={post._id}>
-                    <FeedHeader name={post.createdBy.name} username={post.createdBy.username}/>
+                    <FeedHeader name={post.createdBy.name} username={post.createdBy.username} profilePic={post.createdBy.profilePic}/>
                     <FeedContent file={post.file}/>
                     <LikeProvider initialLikes={post.likes.length}>
                     <FeedDetails  postId={post._id} title={post.title} saves={post.saved.length} comments={post.comments}/>

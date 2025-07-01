@@ -2,10 +2,12 @@
 import axios from "axios";
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CgLayoutGrid } from "react-icons/cg";
 
 export function SignUp() {
+  const router = useRouter()
   const [error, setError] = useState({});
   const passwordLengthCheck = (e) => {
     setError({
@@ -29,6 +31,7 @@ export function SignUp() {
       axios.post("api/auth/signup", SignUpData)
     .then(res => {
       console.log(res.data);
+      router.push("/feed")
 
       setError(res.data)
       console.log("apierror",error);

@@ -12,6 +12,7 @@ import {
   NavbarLink,
   NavbarToggle,
 } from "flowbite-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const NavbarComponent = ({ profilePic }) => {
@@ -27,7 +28,8 @@ const NavbarComponent = ({ profilePic }) => {
           arrowIcon={false}
           inline
           label={
-            <Avatar alt="User settings" img={profilePic} rounded className="object-cover"/>
+            // <Avatar alt="User settings" img={profilePic} rounded className="object-cover w-[50px] h-[50px] rounded-full"/>
+            <Image alt="User settings" src={profilePic} width={50} height={50}  className="object-cover w-[45px] h-[45px] rounded-full"/>
           }
         >
           <DropdownHeader>
@@ -39,6 +41,7 @@ const NavbarComponent = ({ profilePic }) => {
           <DropdownDivider />
           <DropdownItem onClick={() => {
             axios.get("/api/auth/logout")
+            .then(() => router.push("/"))
           }}>
           Sign out</DropdownItem>
         </Dropdown>

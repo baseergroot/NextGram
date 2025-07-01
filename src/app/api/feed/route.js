@@ -8,7 +8,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   console.log("🔄 /api/feed hit");
   await  ConnectDB()
-  const posts = await Post.find().populate("createdBy", "name username")
+  const posts = await Post.find().populate("createdBy", "name username profilePic")
   const decode = await loggedInUser()
   const  user = await User.findById(decode.id)
   
