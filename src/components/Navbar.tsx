@@ -29,7 +29,7 @@ const NavbarComponent = ({ profilePic }) => {
           inline
           label={
             // <Avatar alt="User settings" img={profilePic} rounded className="object-cover w-[50px] h-[50px] rounded-full"/>
-            <Image alt="User settings" src={profilePic} width={50} height={50}  className="object-cover w-[45px] h-[45px] rounded-full"/>
+            <Image alt="User settings" src={profilePic || "/defaultProfile.png"} width={50} height={50} className="object-cover w-[45px] h-[45px] rounded-full" />
           }
         >
           <DropdownHeader>
@@ -41,20 +41,21 @@ const NavbarComponent = ({ profilePic }) => {
           <DropdownDivider />
           <DropdownItem onClick={() => {
             axios.get("/api/auth/logout")
-            .then(() => router.push("/"))
+              .then(() => router.push("/"))
           }}>
-          Sign out</DropdownItem>
+            Sign out</DropdownItem>
         </Dropdown>
         {/* <NavbarToggle className="hidden"/> */}
       </div>
-      <NavbarCollapse className="absolute top-15 lg:relative lg:top-0 bg-white rounded shadow-2xl">
-        <NavbarLink href="/feed" active>
+      <NavbarCollapse className="absolute top-15 md:hidden lg:block lg:relative lg:top-0 bg-white rounded shadow-2xl">
+        <NavbarLink href="/" active>Home</NavbarLink>
+        <NavbarLink href="/feed">
           Feed
         </NavbarLink>
-        <NavbarLink href="/profile">Profile</NavbarLink>
-        <NavbarLink href="/search">Search</NavbarLink>
-        <NavbarLink href="/saved">Saved</NavbarLink>
-        <NavbarLink href="/">About</NavbarLink>
+        
+        <NavbarLink href="/user/profile">Profile</NavbarLink>
+        <NavbarLink href="/post/search">Search</NavbarLink>
+        <NavbarLink href="/user/saved">Saved</NavbarLink>
       </NavbarCollapse>
     </Navbar>
   );

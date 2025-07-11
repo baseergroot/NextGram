@@ -2,7 +2,7 @@
 
 const Hero = () => {
     return (
-        <section className="bg-white dark:bg-gray-900 py-15 px-4 text-center">
+        <section className="bg-white dark:bg-gray-900 py-15 px-4 text-center my-10 md:my-20">
             <div className="max-w-4xl mx-auto">
                 <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
                     Welcome to <span className="text-blue-600">Nextgram</span>

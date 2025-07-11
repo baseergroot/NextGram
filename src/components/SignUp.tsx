@@ -1,14 +1,15 @@
 "use client";
-import axios from "axios";
+import { SignUp } from "@/actions/signup";
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CgLayoutGrid } from "react-icons/cg";
 
-export function SignUp() {
+export function SignupForm() {
   const router = useRouter()
-  const [error, setError] = useState({});
+  const [success, setSuccess] = useState<boolean>(false)
+  const [error, setError] = useState< any >({});
   const passwordLengthCheck = (e) => {
     setError({
       ...error,
@@ -19,7 +20,7 @@ export function SignUp() {
     });
   };
 
-  const Submit = (e) => {
+  const Submit = async (e) => {
     const SignUpData = {
       name: e.get("name"),
       username: e.get("username"),
@@ -27,17 +28,18 @@ export function SignUp() {
       password: e.get("password"),
     };
 
-    if(!error.passwordError) {
-      axios.post("api/auth/signup", SignUpData)
-    .then(res => {
-      console.log(res.data);
-      router.push("/feed")
-
-      setError(res.data)
-      console.log("apierror",error);
-
-    })
-    .catch(err => console.log(err))
+    const response = await SignUp(SignUpData)
+    console.log({ response })
+    if (response.success) {
+      console.log("signed up");
+      setSuccess(true)
+      // router.push("/profile")
+    } else {
+      console.log(response.userExistMessage)
+      setError({
+        ...error,
+        userExistMessage: response.userExistMessage,
+      });
     }
   };
   return (
@@ -80,7 +82,7 @@ export function SignUp() {
             name="email"
             id="email1"
             type="email"
-            placeholder="email@flowbite.com"
+            placeholder="email@flowbite.com (optional)"
             required
           />
         </div>
@@ -92,6 +94,7 @@ export function SignUp() {
             name="password"
             id="password1"
             type="password"
+            placeholder="password"
             required
             onChange={passwordLengthCheck}
           />
@@ -103,7 +106,9 @@ export function SignUp() {
           {/* <Checkbox id="remember" /> */}
           {/* <Label htmlFor="remember">Remember me</Label> */}
         </div>
-        <Button type="submit" disabled={error.passwordError}>Submit</Button>
+        <Button type="submit" disabled={success}>{
+            success ? "redirecting..." : "Signup"
+          }</Button>
         <p>
           Already have an account?{" "}
           <Link className="underline px-1 text-blue-500" href="/login">
