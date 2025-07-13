@@ -8,7 +8,8 @@ import { Login } from "@/actions/login"
 export function LoginForm() {
   const router = useRouter()
   const [authError, setAuthError] = useState(null)
-  const [success, setSuccess] = useState(false)
+  const [success, setSuccess] = useState<boolean>(false)
+  const  [showPassword, setShowPassword] = useState<boolean>(false)
   const Submit = async (e: FormData) => {
     const Logindata = {
       username: e.get("username"),
@@ -25,7 +26,7 @@ export function LoginForm() {
   }
 
   return (
-    <Card className="w-9/10 h-2/3 lg:w-1/3">
+    <Card className="w-10/10 h-10/10 lg:w-1/3">
       <form action={Submit} className="flex flex-col gap-4">
         <div>
           <h1 className="text-center text-2xl mb-1">Login</h1>
@@ -43,15 +44,15 @@ export function LoginForm() {
           <div className="mb-2 block">
             <Label htmlFor="password1">Your password</Label>
           </div>
-          <TextInput name="password" id="password1" type="password" placeholder="password" required />
+          <TextInput name="password" id="password1" type={showPassword ? "text" : "password"} placeholder="password" required />
           {authError && <p className="pt-1 text-red-500">{authError}</p>}
         </div>
         <div className="flex items-center gap-2">
-          {/* <Checkbox id="remember" /> */}
-          {/* <Label htmlFor="remember">Remember me</Label> */}
+          <Checkbox id="remember" checked={showPassword} onChange={() => setShowPassword(prev => !prev)}/>
+          <Label htmlFor="remember">Show password</Label>
         </div>
         <Button type="submit" disabled={success}>{success ? "Redirecting..." : "Submit"}</Button>
-        <p>Don&apos;t have an account yet? {" "} <Link className="underline px-1 text-blue-500" href="/signup">SignUp</Link> </p>
+        <p>Don&apos;t have an account yet? {" "} <Link className="underline px-1 text-blue-500 font-semibold" href="/signup">SignUp</Link> </p>
       </form>
     </Card>
   );

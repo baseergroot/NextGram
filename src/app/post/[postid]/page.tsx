@@ -7,13 +7,15 @@ import { useState } from 'react';
 import { ArrowLeft, MessageCircle, Heart, Share, ThumbsUp, ThumbsDown } from 'lucide-react';
 import Image from 'next/image';
 import BottomNavbar from "@/components/BottomNavbar"
+import { PostParam } from '@/actions/postParam';
+import { PostI } from '@/types/PostType';
 
 const Post = () => {
   const [replyText, setReplyText] = useState('');
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(34);
-  const [postDetail, setPostDetail] = useState({})
-  const  [comments, setComments] = useState([])
+  const [postDetail, setPostDetail] = useState<PostI>({})
+  const [comments, setComments] = useState([])
   const {postid} =  useParams()
   const handleLike = () => {
     setLiked(!liked);
@@ -23,20 +25,30 @@ const Post = () => {
   // console.log("postid:", postid)
   useEffect(() => {
   const fetchData = async () => {
-    try {
-      const res = await axios.post("/api/post/postid", {
-        postid: postid.toString()
-      });
+    // try {
+    //   const res = await axios.post("/api/post/postid", {
+    //     postid: postid.toString()
+    //   });
       
-      const post = res.data.post;
-      setPostDetail(post);
-      setLikeCount(res.data.post.likes.length)
-      setComments(post.comments.reverse())
-      console.log("type:",typeof post, ",", "data:", post)
+      // const post = res.data.post;
+      // setPostDetail(post);
+      // setLikeCount(res.data.post.likes.length)
+      // setComments(post.comments.reverse())
+      // console.log("type:",typeof post, ",", "data:", post)
       
-    } catch (error) {
-      console.error("Error fetching post data:", error);
+    // } catch (error) {
+    //   console.error("Error fetching post data:", error);
+    // }
+    const response = await PostParam(postid)
+    if (!response.success) {
+      console.log("something went wrong")
     }
+    // const post = response.post;
+    setPostDetail(response.post);
+    setLikeCount(response.post.likes.length)
+    setComments(response.post.comments.reverse())
+    console.log("type:",typeof response.post, ",", "data:", response.post)
+
   };
   
   fetchData();
@@ -122,7 +134,7 @@ const Post = () => {
               onChange={(e) => setReplyText(e.target.value)}
               placeholder="Add your reply"
               className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              rows="3"
+              rows={3}
             />
             {replyText && (
               <div className="mt-2 flex justify-end">

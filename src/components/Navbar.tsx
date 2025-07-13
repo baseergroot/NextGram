@@ -29,7 +29,7 @@ const NavbarComponent = ({ profilePic }) => {
           inline
           label={
             // <Avatar alt="User settings" img={profilePic} rounded className="object-cover w-[50px] h-[50px] rounded-full"/>
-            <Image alt="User settings" src={profilePic || "/defaultProfile.png"} width={50} height={50} className="object-cover w-[45px] h-[45px] rounded-full" />
+            <Image alt="User settings" src={!profilePic ? "/defaultProfile.png" : profilePic} width={50} height={50} className="object-cover w-[45px] h-[45px] rounded-full" />
           }
         >
           <DropdownHeader>

@@ -5,7 +5,7 @@ export async function middleware(request: NextRequest) {
   const token:string = request?.cookies?.get("token")?.value
   const currentPathName:string = request.nextUrl.pathname
   const authRoutes:string[] = ["/login", "/signup"]
-  const protectedRoutes:string[] = ["/feed", "/search", "/post/create", "post/[postid]", "/user/profile"]
+  const protectedRoutes:string[] = ["/feed", "/search", "/post/create", "post/[postid]", "/user/profile", "/user/save"]
   let isLoggedIn:boolean = false
 
   if (token) {

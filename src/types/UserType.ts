@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import { PostI } from "./PostType";
 
 export interface UserI {
-  _id?: Types.ObjectId,
+  _id?: Types.ObjectId | string,
   name?: string,
   username?: string,
   email?: string,

@@ -10,6 +10,7 @@ export function SignupForm() {
   const router = useRouter()
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState< any >({});
+  const  [showPassword, setShowPassword] = useState<boolean>(false)
   const passwordLengthCheck = (e) => {
     setError({
       ...error,
@@ -33,7 +34,7 @@ export function SignupForm() {
     if (response.success) {
       console.log("signed up");
       setSuccess(true)
-      // router.push("/profile")
+      router.push("/feed")
     } else {
       console.log(response.userExistMessage)
       setError({
@@ -43,8 +44,8 @@ export function SignupForm() {
     }
   };
   return (
-    <Card className="w-9/10 h-9/10 lg:w-1/3">
-      <h1 className="text-center text-2xl mb-1">SignUp</h1>
+    <Card className="w-10/10 h-10/10 lg:w-1/3">
+      <h1 className="text-center text-2xl mb-1">Sign up</h1>
       <hr className="mb-2" />
       <form action={Submit} className="flex flex-col gap-4">
         <div>
@@ -93,25 +94,25 @@ export function SignupForm() {
           <TextInput
             name="password"
             id="password1"
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="password"
             required
             onChange={passwordLengthCheck}
           />
           {error.passwordError && (
-            <p className="text-red-500">{error.passwordError}</p>
+            <p className="text-red-500 text-[14px] pt-0.5">{error.passwordError}</p>
           )}
         </div>
         <div className="flex items-center gap-2">
-          {/* <Checkbox id="remember" /> */}
-          {/* <Label htmlFor="remember">Remember me</Label> */}
+          <Checkbox id="remember" checked={showPassword} onChange={() => setShowPassword(prev => !prev)}/>
+          <Label htmlFor="remember">Show password</Label>
         </div>
         <Button type="submit" disabled={success}>{
             success ? "redirecting..." : "Signup"
           }</Button>
         <p>
           Already have an account?{" "}
-          <Link className="underline px-1 text-blue-500" href="/login">
+          <Link className="underline px-1 text-blue-500 font-semibold" href="/login">
             Login
           </Link>
         </p>

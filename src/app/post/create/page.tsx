@@ -1,25 +1,34 @@
 "use client";
+import { CreatePost } from "@/actions/createPost";
 import BottomNavbar from "@/components/BottomNavbar";
 import axios from "axios";
 import { Button, FileInput, Label, Textarea } from "flowbite-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Create() {
-  const [imageUploaded, setImageUploaded] = useState(null)
-  const handleAction = async (form) => {
+  const router = useRouter()
+  // const [imageUploaded, setImageUploaded] = useState(null)
+  const [success, setSuccess] = useState<boolean>(false)
+  const [file, setFile] = useState<string>(null)
+  const handleAction = async (form: FormData) => {
     const formData = new FormData();
     formData.append("file", form.get("file"));
     formData.append("upload_preset", "nextgram");
 
-     axios.post(
-      process.env.NEXT_PUBLIC_CLOUDNARY_IMAGE_URL,
-      formData
-    ).then( async res => {
-    console.log(res.data)
-    setImageUploaded(res.data.secure_url)
-     await axios.post("/api/post/create", {title: form.get("title"), file: res.data.secure_url})
-    })
-    .catch(err => console.log({err}))
+      const data: { title: string, file: string } = {
+        title: form.get("title") as string,
+        file
+      }
+
+      const response: { success: boolean } = await CreatePost(data)
+      if (!response.success) {
+        console.log("something went wrong")
+        return
+      }
+      console.log({ response })
+      setSuccess(true)
+      router.push("/user/profile")
 
   };
   return (
@@ -40,7 +49,16 @@ export default function Create() {
               </p>
               <span className="px-4 py-1 bg-gray-200 rounded mt-3">Upload</span>
             </div>
-            <FileInput id="dropzone-file" className="hidden" name="file" required />
+            <FileInput aria-required id="dropzone-file" className="hidden" name="file" required onChange={e => {
+              const formData = new FormData();
+              formData.append("file", e.target.files[0]);
+              formData.append("upload_preset", "nextgram");
+              axios.post(
+                process.env.NEXT_PUBLIC_CLOUDNARY_IMAGE_URL,
+                formData
+              ).then(res => setFile(res.data.secure_url))
+                .catch(err => console.log("error agaya lamandu, ziyada cool ban rahe the na sub kuch tek tha:", err.message))
+            }} />
           </Label>
         </div>
         <div className="w-9/10">
@@ -53,13 +71,15 @@ export default function Create() {
             required
             rows={4}
             name="title"
+            aria-required
           />
         </div>
         <Button
-          className="bg-black text-white font-semibold px-10"
+          className="  font-semibold px-10"
           type="submit"
+          disabled={!file}
         >
-          Post
+          {success ? "redirecting..." : "Post"}
         </Button>
       </form>
       <BottomNavbar />
