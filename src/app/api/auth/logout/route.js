@@ -6,3 +6,5 @@ export async function GET(request) {
   cookie.delete("token")
   return redirect("/")
 }
+
+// done

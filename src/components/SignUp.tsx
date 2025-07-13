@@ -44,7 +44,7 @@ export function SignupForm() {
     }
   };
   return (
-    <Card className="w-10/10 h-10/10 lg:w-1/3">
+    <Card className="w-10/10 h-10/10 lg:w-1/3 md:w-[50%] md:h-9/10">
       <h1 className="text-center text-2xl mb-1">Sign up</h1>
       <hr className="mb-2" />
       <form action={Submit} className="flex flex-col gap-4">

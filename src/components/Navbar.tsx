@@ -1,4 +1,6 @@
 "use client"
+import { isLoggedinAction } from "@/actions/isLoggedin";
+import { Logout } from "@/actions/logout";
 import axios from "axios";
 import {
   Avatar,
@@ -14,9 +16,19 @@ import {
 } from "flowbite-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const NavbarComponent = ({ profilePic }) => {
+  const [isLoggedin, setIsloggedin] = useState<boolean>(false)
   const router = useRouter()
+  useEffect(() => {
+    async function Fetch() {
+      const response:boolean = await isLoggedinAction()
+      console.log( response )
+      response ? setIsloggedin(true) : setIsloggedin(false)
+    }
+    Fetch()
+  },[])
   return (
     <Navbar fluid rounded className="px-5">
       <NavbarBrand href="/logo.svg">
@@ -39,11 +51,21 @@ const NavbarComponent = ({ profilePic }) => {
           <DropdownItem href="/search">Search</DropdownItem>
           <DropdownItem>Settings</DropdownItem>
           <DropdownDivider />
-          <DropdownItem onClick={() => {
-            axios.get("/api/auth/logout")
-              .then(() => router.push("/"))
+          {
+          isLoggedin ? 
+          <DropdownItem onClick={ async () => {
+            const response = await Logout()
+              if (response)  {
+                setIsloggedin(false)
+                router.push("/")
+              }
           }}>
-            Sign out</DropdownItem>
+            Sign out</DropdownItem> : 
+            <DropdownItem onClick={() => router.push("/login")}>
+            Sign in</DropdownItem>
+          }
+          
+          
         </Dropdown>
         {/* <NavbarToggle className="hidden"/> */}
       </div>

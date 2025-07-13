@@ -1,3 +1,4 @@
+import BottomNavbar from "@/components/BottomNavbar";
 import SearchComponent from "@/components/Search";
 
 export const metadata = {
@@ -8,6 +9,9 @@ export const metadata = {
 export default function SearchPage() {
 
   return (
-    <SearchComponent />
+    <>
+      <SearchComponent />
+      <BottomNavbar />
+    </>
   );
 }
