@@ -25,10 +25,10 @@ export async function POST(req) {
   // const user = await User.create({name, username, email, password: hashedPassword})
   // console.log({user})
 
-  const token = sign({name, username, email, id: user?._id}, process.env.JWT_SECRET)
-  cookie.set("token", token, {
-    httpOnly: true
-  })
-  console.log("signed in");
-  return NextResponse.json({success: true})
+  // const token = sign({name, username, email, id: user?._id}, process.env.JWT_SECRET)
+  // cookie.set("token", token, {
+  //   httpOnly: true
+  // })
+  // console.log("signed in");
+  return NextResponse.json({success: true, message: "No More Using api routes"})
 }
