@@ -102,7 +102,7 @@ export function SignupForm() {
           <div className="flex flex-col justify-end">
             <div className="flex justify-between items-center pt-2">
             {error.passwordError && (
-              <p className="text-red-500 text-[14px]">Password's too short <br /> Must be atleast 6 characters</p>
+              <p className="text-red-500 text-[14px]">Password&apos;s too short <br /> Must be atleast 6 characters</p>
             )}
             <div className="flex items-center gap-2">
               <Checkbox id="remember" checked={showPassword} onChange={() => setShowPassword(prev => !prev)} />
