@@ -19,3 +19,5 @@ export async function POST(req) {
   const updatedPost = await Post.findByIdAndUpdate(postId, {$push: {likes: decode.id}}, { new: true })
   return NextResponse.json({ok: true, message: "liked", updatedPost})
 }
+
+// Done. Shifted to server action

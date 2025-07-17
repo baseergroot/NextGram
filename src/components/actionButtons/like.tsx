@@ -1,16 +1,17 @@
 "use clientt"
 
+import { LikeAction } from '@/actions/likePost'
 import { useLike } from '@/lib/LikesContext'
-import axios from 'axios'
 import React from 'react'
 import { IoMdHeartEmpty } from 'react-icons/io'
 
 const Like = ({postId}) => {
   const { setLikes } = useLike();
-  const LikePost = postId => {
-    console.log("postid", postId)
-    axios.post("/api/post/like", {postId: postId.toString()})
-    .then(res => setLikes(res.data.updatedPost.likes.length))
+  const LikePost = async postId => {
+  console.log("postid", postId)
+  const response = await LikeAction(postId)
+  response.success ? setLikes(response.updatedPost.likes.length) : console.log("Something went wrong")
+  
   }
   return (
     <button onClick={() => LikePost(postId)}>

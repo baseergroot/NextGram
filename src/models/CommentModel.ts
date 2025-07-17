@@ -1,8 +1,14 @@
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
+import User from "./UserModel";
+import Post from "./PostModel";
 
+console.log("Comment schema hit")
+
+let Comment = mongoose.models.Comment
 const commentSchema = new mongoose.Schema({
   createdBy: {
-    type: mongoose.Schema.Types.ObjectId, ref: "User",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User,
     required: true
   },
   content: {
@@ -10,19 +16,22 @@ const commentSchema = new mongoose.Schema({
     required: true
   },
   post: {
-    type: mongoose.Schema.Types.ObjectId, ref: "Post",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Post",
     required: true
   },
   likes: [{
-    type: mongoose.Schema.Types.ObjectId, ref: "Post",
-    default: 0
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User,
+    default: [],
   }],
-dislikes:[{
-  type: mongoose.Schema.Types.ObjectId, ref: "Post",
-  default: 0
-}]
-})
+  dislikes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    default: [],
+  }]
+});
 
-const Comment = mongoose.models.Comment || mongoose.model("Comment", commentSchema)
+Comment = Comment || mongoose.model("Comment", commentSchema);
 
-export default Comment
+export default Comment;

@@ -17,3 +17,5 @@ console.log("route recieve", searchInput)
   // console.log("result: ", result)
   return NextResponse.json({ok: true})
 }
+
+// Done. Shifted to server action

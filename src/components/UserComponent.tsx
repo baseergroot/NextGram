@@ -7,24 +7,30 @@ import { UserI } from '@/types/UserType';
 import { useRouter } from 'next/navigation';
 import BottomNavbar from "@/components/BottomNavbar"
 import { PostI } from '@/types/PostType';
+import { FollowAction } from '@/actions/follow';
 
 export default function UserComponent({ userDetail, posts }) {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<string>('posts');
   const [user, setUser] = useState<UserI>()
+  const [followers, setFollowers] = useState<number>(userDetail?.followers.length)
 
   useEffect(() => userDetail ? setUser(userDetail) : console.log("something went wrong")
   , [])
-
+   
   const stats: { number: number; label: string }[] = [
     { number: posts.length, label: 'Posts' },
-    { number: user?.followers.length, label: 'Followers' },
+    { number: followers, label: 'Followers' },
     { number: user?.followings.length, label: 'Following' }
   ];
 
   const contentItems: { id: number }[] = Array.from({ length: 9 }, (_, i) => ({
     id: i + 1
   }));
+  const handleFollow = async () => {
+    const response = await FollowAction(userDetail._id)
+    response.success && setFollowers(response.userFollowers.length)
+  }
 
   return (
     <div className="max-w-sm mx-auto bg-white min-h-screen border border-gray-200 relative">
@@ -44,7 +50,7 @@ export default function UserComponent({ userDetail, posts }) {
 
         <button
           className="bg-gray-900 text-white px-10 py-3 rounded-full text-base font-semibold hover:bg-gray-700 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg mb-6"
-          onClick={() => "add a button"}
+          onClick={handleFollow}
         >
           Follow
         </button>

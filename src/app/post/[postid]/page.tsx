@@ -9,18 +9,27 @@ import Image from 'next/image';
 import BottomNavbar from "@/components/BottomNavbar"
 import { PostParam } from '@/actions/postParam';
 import { PostI } from '@/types/PostType';
+import { LikeAction } from '@/actions/likePost';
+import { LikeAComment } from '@/actions/likeAComment';
 
 const Post = () => {
   const [replyText, setReplyText] = useState('');
   const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(34);
+  const [likeCount, setLikeCount] = useState(0);
   const [postDetail, setPostDetail] = useState<PostI>({})
   const [comments, setComments] = useState([])
   const {postid} =  useParams()
-  const handleLike = () => {
+  const handleLike = async () => {
     setLiked(!liked);
     setLikeCount(liked ? likeCount - 1 : likeCount + 1);
-    // axios.post("/api/post/like", {postid: postid.toString()})
+    const response = await LikeAction(postid)
+    if (response.success) {
+      setLikeCount(response.updatedPost.likes.length)
+      setLiked(!liked)
+    }
+    else{
+      console.log("something went wrong while liking this post")
+    }
   };
   // console.log("postid:", postid)
   useEffect(() => {
@@ -30,11 +39,11 @@ const Post = () => {
     //     postid: postid.toString()
     //   });
       
-      // const post = res.data.post;
-      // setPostDetail(post);
-      // setLikeCount(res.data.post.likes.length)
-      // setComments(post.comments.reverse())
-      // console.log("type:",typeof post, ",", "data:", post)
+    //   const post = res.data.post;
+    //   setPostDetail(post);
+    //   setLikeCount(res.data.post.likes.length)
+    //   setComments(post.comments.reverse())
+    //   console.log("type:",typeof post, ",", "data:", post)
       
     // } catch (error) {
     //   console.error("Error fetching post data:", error);
@@ -184,9 +193,10 @@ const Post = () => {
               </p>
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-1">
-                  <button onClick={() => {
-                    axios.post("/api/post/comment/like", {commentId: comment._id.toString()})
-                    .then(res => comment = res.data.comment)
+                  <button onClick={ async () => {
+                    // axios.post("/api/post/comment/like", {commentId: comment._id.toString()})
+                    // .then(res => comment = res.data.comment)
+                    const response = await LikeAComment(comment._id)
                   }}><ThumbsUp className="w-4 h-4 text-gray-600" /></button>
                   <span className="text-gray-600 text-sm">{ comment.likes.length }</span>
                 </div>

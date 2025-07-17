@@ -16,3 +16,5 @@ export async function POST(req) {
   await User.findByIdAndUpdate(decode.id, {$push: {posts: post._id}})
   return NextResponse.json({OK: true})
 }
+
+// Done. Shifted to server action

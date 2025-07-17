@@ -18,3 +18,5 @@ export async function POST(req) {
     return NextResponse.json({error})
   }
 }
+
+// Done. Shifted to server action

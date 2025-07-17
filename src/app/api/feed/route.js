@@ -18,3 +18,5 @@ export async function GET() {
   }
   return NextResponse.json({message: "no post to be shown", profilePic: user.profilePic})
 }
+
+// Done. Shifted to server action

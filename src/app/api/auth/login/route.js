@@ -31,3 +31,5 @@ export async function POST(req) {
   
   return NextResponse.json({success: true})
 }
+
+// Done. Shifted to server action

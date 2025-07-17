@@ -30,7 +30,7 @@ const NavbarComponent = ({ profilePic }) => {
     Fetch()
   },[])
   return (
-    <Navbar fluid rounded className="px-5">
+    <Navbar rounded fluid className="px-5 shadow sticky top-0 z-50">
       <NavbarBrand href="/logo.svg">
         {/* <img src="/logo.svg" className="mr-3 h-6 sm:h-9" alt="Flowbite React Logo" /> */}
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">NextGram</span>

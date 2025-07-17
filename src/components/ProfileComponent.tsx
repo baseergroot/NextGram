@@ -93,9 +93,9 @@ export default function ProfileComponent({ response }) {
 
       {/* Content Grid */}
       <div className="grid grid-cols-2 gap-2 p-2 bg-gray-50 mb-15">
-        {!user ? "no post to see" : user.posts?.map((item: PostI) => (
+        {!user ? "no post to see" : user.posts?.map((item: PostI, index) => (
           <div
-            key={item._id as string}
+            key={index}
             className="aspect-square bg-gray-200 rounded flex items-center justify-center text-4xl text-gray-600 font-bold cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-gray-300 "
             onClick={() => console.log(`Content item ${item.file} clicked`)}
           >

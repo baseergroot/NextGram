@@ -13,6 +13,7 @@ export default async function UserPage({params}) {
   let user:UserI = await (User as any).findOne({username})
   let posts:PostI[] = await (Post as any).find({createdBy: user._id})
   user = {
+    _id:  user._id,
     name: user.name,
     username: user.name,
     profilePic: user.profilePic,

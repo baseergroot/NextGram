@@ -9,8 +9,8 @@ import { CgLayoutGrid } from "react-icons/cg";
 export function SignupForm() {
   const router = useRouter()
   const [success, setSuccess] = useState<boolean>(false)
-  const [error, setError] = useState< any >({});
-  const  [showPassword, setShowPassword] = useState<boolean>(false)
+  const [error, setError] = useState<any>({});
+  const [showPassword, setShowPassword] = useState<boolean>(false)
   const passwordLengthCheck = (e) => {
     setError({
       ...error,
@@ -44,7 +44,7 @@ export function SignupForm() {
     }
   };
   return (
-    <Card className="w-10/10 h-10/10 lg:w-1/3 md:w-[50%] md:h-9/10">
+    <Card className="w-10/10 h-10/10 md:w-6/10 md:h-9/10 lg:w-1/3">
       <h1 className="text-center text-2xl mb-1">Sign up</h1>
       <hr className="mb-2" />
       <form action={Submit} className="flex flex-col gap-4">
@@ -99,17 +99,22 @@ export function SignupForm() {
             required
             onChange={passwordLengthCheck}
           />
-          {error.passwordError && (
-            <p className="text-red-500 text-[14px] pt-0.5">{error.passwordError}</p>
-          )}
+          <div className="flex flex-col justify-end">
+            <div className="flex justify-between items-center pt-2">
+            {error.passwordError && (
+              <p className="text-red-500 text-[14px]">Password's too short <br /> Must be atleast 6 characters</p>
+            )}
+            <div className="flex items-center gap-2">
+              <Checkbox id="remember" checked={showPassword} onChange={() => setShowPassword(prev => !prev)} />
+              <Label htmlFor="remember">Show password</Label>
+            </div>
+          </div>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Checkbox id="remember" checked={showPassword} onChange={() => setShowPassword(prev => !prev)}/>
-          <Label htmlFor="remember">Show password</Label>
-        </div>
+
         <Button type="submit" disabled={success}>{
-            success ? "redirecting..." : "Signup"
-          }</Button>
+          success ? "redirecting..." : "Signup"
+        }</Button>
         <p>
           Already have an account?{" "}
           <Link className="underline px-1 text-blue-500 font-semibold" href="/login">

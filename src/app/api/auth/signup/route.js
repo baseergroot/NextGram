@@ -32,3 +32,5 @@ export async function POST(req) {
   // console.log("signed in");
   return NextResponse.json({success: true, message: "No More Using api routes"})
 }
+
+// Done. Shifted to server action

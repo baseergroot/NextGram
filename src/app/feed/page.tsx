@@ -5,10 +5,8 @@ import FeedDetails from "@/components/(feed)/details";
 import FeedHeader from "@/components/(feed)/header";
 import BottomNavbar from "@/components/BottomNavbar"
 import NavbarComponent from "@/components/Navbar"
-import { LikeProvider } from "@/lib/LikesContext";
 import { PostI } from "@/types/PostType";
-import { Fragment, Suspense, useEffect, useState } from "react";
-
+import { Fragment, useEffect, useState } from "react";
 
 const FeedPage = () => {
     const [posts, setPosts] = useState<PostI[]>([])
@@ -20,7 +18,7 @@ const FeedPage = () => {
             if (!response.ok) {
                 console.log("something went wrong")
             }
-            console.log({response})
+            console.log({ response })
             setPosts(response.posts)
             setProfilePic(response.profilePic)
             console.log(response.posts[0])
@@ -32,17 +30,15 @@ const FeedPage = () => {
         return "Loading..."
     }
     return (
-        <div className="">
+        <div className="w-full h-full scroll-smooth">
             <NavbarComponent profilePic={profilePic} />
-            <main className="aspect-6/8 mb-10">
+            <main className=" mb-10 flex flex-col gap-3 mx-auto mt-10 md:w-2/3 lg:max-w-6/10 lg:max-h-9/10 xl:max-w-3/10">
                 {
                     posts.map(post => (
                         <Fragment key={post._id as string}>
                             <FeedHeader name={post.createdBy.name} username={post.createdBy.username} profilePic={post.createdBy.profilePic} />
                             <FeedContent file={post.file} />
-                            <LikeProvider initialLikes={post.likes.length}>
-                                <FeedDetails postId={post._id} title={post.title} saves={post.saved.length} comments={post.comments} />
-                            </LikeProvider>
+                            <FeedDetails postId={post._id.toString()} title={post.title} saves={post.saved.length} comments={post.comments} likes={post.likes} />
                         </Fragment>
                     ))
                 }

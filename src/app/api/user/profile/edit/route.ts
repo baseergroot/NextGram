@@ -12,3 +12,5 @@ export async function PATCH(request: NextRequest) {
   const user = await (User as any).findByIdAndUpdate(decode.id, {name, username, profilePic: file})
   return NextResponse.json(user)
 }
+
+// Done. Shifted to server action

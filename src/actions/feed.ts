@@ -10,12 +10,13 @@ import { UserI } from "@/types/UserType";
 await ConnectDB()
 export async function Feed() {
 
-  const posts:PostI[] = await (Post as any).find().populate("createdBy", "name username profilePic")
-  const decode:Decode = await loggedInUser()
-  const user:UserI = await (User as any).findById(decode.id)
+  const posts: PostI[] = await (Post as any).find().populate("createdBy", "name username profilePic")
+  const decode: Decode = await loggedInUser()
+  const user: UserI = await (User as any).findById(decode.id)
+  console.log({user})
 
   if (posts) {
-    console.log({ posts })
+    // console.log("posts", posts[0].createdBy )
     return {
       ok: true,
       posts: posts.map(post => ({

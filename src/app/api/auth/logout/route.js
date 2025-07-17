@@ -7,4 +7,4 @@ export async function GET(request) {
   return redirect("/")
 }
 
-// done
+// Done. Shifted to server action

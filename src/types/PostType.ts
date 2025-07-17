@@ -7,7 +7,7 @@ export interface PostI {
   title?: string;
   file?: string;
   createdBy?: UserI;
-  likes?: UserI[] | string[];
+  likes?: UserI[] | Types.ObjectId[];
   comments?: CommentI[] | string[];
   saved?: UserI[] | string[];
 }

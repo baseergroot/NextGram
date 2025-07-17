@@ -20,7 +20,7 @@ export function LoginForm() {
     console.log({response})
     if (response.success) {
       setSuccess(true)
-      // router.push("/feed")
+      router.push("/feed")
     } else {
       setAuthError(response.ErrorMessage)
       setSuccess(false)
@@ -28,7 +28,7 @@ export function LoginForm() {
   }
 
   return (
-    <Card className="w-10/10 h-10/10 lg:w-1/3 lg:h-9/10">
+    <Card className="w-10/10 h-10/10 md:w-6/10 md:h-9/10 lg:w-1/3">
       <form action={Submit} className="flex flex-col gap-4">
         <div>
           <h1 className="text-center text-2xl mb-1">Login</h1>

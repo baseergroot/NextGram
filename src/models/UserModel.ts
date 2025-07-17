@@ -1,4 +1,3 @@
-import { UserI } from "@/types/UserType";
 import mongoose, { model, models, Schema, Types } from "mongoose";
 
 const UserSchema = new Schema({
@@ -27,7 +26,7 @@ const UserSchema = new Schema({
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
+      ref: "Post"
     },
   ],
   saved: [
