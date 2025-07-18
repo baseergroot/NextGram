@@ -5,6 +5,7 @@ import loggedInUser, { Decode } from "@/lib/getLoggedInUser";
 import Post from "@/models/PostModel";
 import User from "@/models/UserModel";
 import { PostI } from "@/types/PostType";
+
 import { UserI } from "@/types/UserType";
 
 await ConnectDB()
@@ -38,3 +39,5 @@ export async function Feed() {
   }
   return { message: "no post to be shown", profilePic: user.profilePic }
 }
+
+

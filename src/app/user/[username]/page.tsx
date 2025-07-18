@@ -17,8 +17,8 @@ export default async function UserPage({params}) {
     name: user.name,
     username: user.name,
     profilePic: user.profilePic,
-    followers: user.followers,
-    followings: user.followings,
+    followers: user.followers.map(_id => _id.toString()),
+    followings: user.followings.map(_id => _id.toString()),
     bio: user.bio
   }
   posts = posts.map(post => ({

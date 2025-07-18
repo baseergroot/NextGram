@@ -10,6 +10,7 @@ import { PostI } from '@/types/PostType';
 import { FollowAction } from '@/actions/follow';
 
 export default function UserComponent({ userDetail, posts }) {
+  console.log("followers",userDetail.followers)
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<string>('posts');
   const [user, setUser] = useState<UserI>()
@@ -23,10 +24,6 @@ export default function UserComponent({ userDetail, posts }) {
     { number: followers, label: 'Followers' },
     { number: user?.followings.length, label: 'Following' }
   ];
-
-  const contentItems: { id: number }[] = Array.from({ length: 9 }, (_, i) => ({
-    id: i + 1
-  }));
   const handleFollow = async () => {
     const response = await FollowAction(userDetail._id)
     response.success && setFollowers(response.userFollowers.length)

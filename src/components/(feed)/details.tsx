@@ -19,7 +19,7 @@ const FeedDetails = ({postId, title, saves, comments, likes}) => {
     response.success ? setLikesCount(response.updatedPost.likes.length) : console.log("Something went wrong")
   }
   return (
-    <section className=" h-[11%] flex flex-col justify-between px-3 mb-4">
+    <section className=" h-[15%] flex flex-col justify-between px-3 mb-4">
       <p className="font-bold">{title}</p>
       <div className="flex gap-10 text-2xl">
         <div className="flex items-center gap-2">
