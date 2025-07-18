@@ -4,9 +4,9 @@ import { UserI } from "./UserType"
 
 export interface CommentI {
   _id?: Types.ObjectId,
-  createdBy?: UserI | string,
+  createdBy?: UserI | Types.ObjectId | string,
   content?: string,
-  post?: PostI | string
-  likes: UserI[] | string[],
-  disLikes: UserI[] | string[]
+  post?: PostI | string | Types.ObjectId,
+  likes?: UserI[] | string[] | Types.ObjectId[],
+  disLikes?: UserI[] | string[] | Types.ObjectId[]
 }
