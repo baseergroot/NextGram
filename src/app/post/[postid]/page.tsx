@@ -1,8 +1,12 @@
 // "use client"
 
 import ConnectDB from "@/lib/ConnectDb"
+import loggedInUser from "@/lib/getLoggedInUser"
+import Comment from "@/models/CommentModel"
 import Post from "@/models/PostModel"
+import { CommentI } from "@/types/CommentType"
 import { PostI } from "@/types/PostType"
+import { Button } from "flowbite-react"
 import Image from "next/image"
 
 // import axios from 'axios'
@@ -239,6 +243,7 @@ import Image from "next/image"
 
 const PostRoute = async ({params}) => {
   const {postid} = await params
+  const decode = await loggedInUser()
   await ConnectDB()
   let post: PostI = await (Post as any).findById(postid).populate("createdBy", "name username profilePic").populate("comments", "content createdBy likes")
   post = {
@@ -263,6 +268,7 @@ const PostRoute = async ({params}) => {
       profilePic: post.createdBy.profilePic
     }
   }
+  let comments = post.comments
   console.log({ post })
 
   console.log(postid)
@@ -288,7 +294,19 @@ const PostRoute = async ({params}) => {
       </section>
     </section>
     <section>
-      under development comments! will be ready soon
+      <form action={
+        async (form: FormData) => {
+          "use server"
+          await ConnectDB()
+          const content = form.get("comment") as string
+          console.log(typeof content, await Comment.validate({content, createdBy: decode.id, post: postid}))
+          // const comment = await (Comment as any).create({content, createdBy: decode.id, post: postid}, {new: true})
+          // await Post.findByIdAndUpdate(postid, {$push: {comments: comment._id}})
+        }
+      } className="border-2">
+        <textarea name="comment"></textarea>        
+        <Button type="submit">Submit</Button>
+      </form>
     </section>
     <section>
       {
