@@ -1,5 +1,3 @@
-// "use client"
-
 import ConnectDB from "@/lib/ConnectDb"
 import loggedInUser from "@/lib/getLoggedInUser"
 import Comment from "@/models/CommentModel"
@@ -7,239 +5,8 @@ import Post from "@/models/PostModel"
 import { CommentI } from "@/types/CommentType"
 import { PostI } from "@/types/PostType"
 import { Button } from "flowbite-react"
+import { revalidatePath } from "next/cache"
 import Image from "next/image"
-
-// import axios from 'axios'
-// import { useParams } from 'next/navigation'
-// import React, { Fragment, useEffect } from 'react'
-// import { useState } from 'react';
-// import { ArrowLeft, MessageCircle, Heart, Share, ThumbsUp, ThumbsDown } from 'lucide-react';
-// import Image from 'next/image';
-// import BottomNavbar from "@/components/BottomNavbar"
-// import { PostParam } from '@/actions/postParam';
-// import { PostI } from '@/types/PostType';
-// import { LikeAction } from '@/actions/likePost';
-// import { LikeAComment } from '@/actions/likeAComment';
-
-// const Post = () => {
-//   const [replyText, setReplyText] = useState('');
-//   const [liked, setLiked] = useState(false);
-//   const [likeCount, setLikeCount] = useState(0);
-//   const [postDetail, setPostDetail] = useState<PostI>({})
-//   const [comments, setComments] = useState([])
-//   const {postid} =  useParams()
-//   const handleLike = async () => {
-//     setLiked(!liked);
-//     setLikeCount(liked ? likeCount - 1 : likeCount + 1);
-//     const response = await LikeAction(postid)
-//     if (response.success) {
-//       setLikeCount(response.updatedPost.likes.length)
-//       setLiked(!liked)
-//     }
-//     else{
-//       console.log("something went wrong while liking this post")
-//     }
-//   };
-//   // console.log("postid:", postid)
-//   useEffect(() => {
-//   const fetchData = async () => {
-//     // try {
-//     //   const res = await axios.post("/api/post/postid", {
-//     //     postid: postid.toString()
-//     //   });
-      
-//     //   const post = res.data.post;
-//     //   setPostDetail(post);
-//     //   setLikeCount(res.data.post.likes.length)
-//     //   setComments(post.comments.reverse())
-//     //   console.log("type:",typeof post, ",", "data:", post)
-      
-//     // } catch (error) {
-//     //   console.error("Error fetching post data:", error);
-//     // }
-//     const response = await PostParam(postid)
-//     if (!response.success) {
-//       console.log("something went wrong")
-//     }
-//     // const post = response.post;
-//     setPostDetail(response.post);
-//     setLikeCount(response.post.likes.length)
-//     setComments(response.post.comments.reverse())
-//     console.log("type:",typeof response.post, ",", "data:", response.post)
-
-//   };
-  
-//   fetchData();
-// }, [postid]);
-
-  
-
-//   if (!postDetail) {
-//     return <p>Loading...</p>
-//   }else {
-
-//   return (
-//     <div className="max-w-md mx-auto bg-white min-h-screen">
-//       {/* Header */}
-//       <div className="flex items-center justify-between p-4 border-b border-gray-200">
-//         <ArrowLeft className="w-6 h-6 text-gray-700" />
-//         <h1 className="text-lg font-semibold text-gray-900">Post </h1>
-//         <div className="w-6"></div>
-//       </div>
-
-//       {/* Main Post */}
-//       <div className="p-4">
-//         <div className="flex items-start space-x-3 mb-4">
-//           <div className="w-12 h-12 bg-orange-200 rounded-full flex items-center justify-center">
-//             {/* <div className="w-8 h-8 bg-gray-800 rounded-full"></div> */}
-//             <Image
-//             className='rounded-full'
-//             src={postDetail.createdBy?.profilePic ? postDetail.createdBy?.profilePic : "/defaultProfile.png"} alt='profile' width={50} height={50}/>
-//           </div>
-//           <div className="flex-1">
-//             <h2 className="font-semibold text-gray-900">{postDetail.createdBy?.name}</h2>
-//             <p className="text-gray-600">@{postDetail.createdBy?.username}</p>
-//           </div>
-//         </div>
-
-//         <p className="text-gray-900 text-base leading-relaxed mb-4">
-//           {postDetail.title}
-//         </p>
-
-//         {/* Image */}
-//         <div className="mb-4 rounded-lg overflow-hidden">
-//           <img 
-//             src={postDetail.file}
-//             alt="Team meeting" 
-//             className="w-full h-auto object-contain"
-//           />
-//         </div>
-
-//         {/* Engagement Stats */}
-//         <div className="flex items-center justify-between py-3 border-b border-gray-200">
-//           <div className="flex items-center space-x-6">
-//             <div className="flex items-center space-x-1">
-//               <MessageCircle className="w-5 h-5 text-gray-600" />
-//               <span className="text-gray-600">{postDetail.comments?.length}</span>
-//             </div>
-//             <button 
-//               onClick={handleLike}
-//               className="flex items-center space-x-1"
-//             >
-//               <Heart className={`w-5 h-5 ${liked ? 'text-red-500 fill-red-500' : 'text-gray-600'}`} />
-//               <span className="text-gray-600">{likeCount}</span>
-//             </button>
-//             <div className="flex items-center space-x-1">
-//               <Share className="w-5 h-5 text-gray-600" />
-//               <span className="text-gray-600">{postDetail.saved?.length}</span>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Reply Input */}
-//       <div className="p-4 border-t border-gray-200">
-//         <div className="flex items-start space-x-3">
-//           <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-//             {/* <div className="w-6 h-6 bg-gray-600 rounded-full"></div> */}
-//             <Image
-//             className='rounded-full'
-//             src={postDetail.createdBy?.profilePic ? postDetail.createdBy?.profilePic : "/defaultProfile.png"} alt='profile' width={50} height={50}/>
-//           </div>
-//           <div className="flex-1">
-//             <textarea
-//               value={replyText}
-//               onChange={(e) => setReplyText(e.target.value)}
-//               placeholder="Add your reply"
-//               className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-//               rows={3}
-//             />
-//             {replyText && (
-//               <div className="mt-2 flex justify-end">
-//                 <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors" onClick={() => {
-//                   axios.post("/api/post/comment", {
-//                     postid: postDetail._id.toString(),
-//                     content: replyText
-//                   })
-//                   .then(res => {
-//                     setComments(res.data.post.comments.reverse())
-//                     console.log(res.data.post.comments)
-//                   })
-//                   .catch(err => console.log(err))
-//                   setReplyText("")
-//                 }}>
-//                   Reply
-//                 </button>
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Reply Thread */}
-//       <div className="border-t border-gray-200">
-        
-//         {comments.map((comment) => (
-
-        
-//           <Fragment key={comment._id}>
-//           <div className="p-4 border-b border-gray-100">
-//           <div className="flex items-start space-x-3">
-//             <div className="w-10 h-10 bg-orange-200 rounded-full flex items-center justify-center">
-//               {/* <div className="w-6 h-6 bg-gray-800 rounded-full"></div> */}
-//               <Image
-//             className='rounded-full'
-//             src={comment.createdBy.profilePic} alt='profile' width={50} height={50}/>
-
-//             </div>
-//             <div className="flex-1">
-//               <div className="flex items-center space-x-2 mb-1">
-//                 <h3 className="font-semibold text-gray-900">{comment.createdBy.name}</h3>
-//                 <span className="text-gray-500 text-sm">11h</span>
-//               </div>
-//               <p className="text-gray-900 mb-2">
-//                 {comment.content}
-//               </p>
-//               <div className="flex items-center space-x-4">
-//                 <div className="flex items-center space-x-1">
-//                   <button onClick={ async () => {
-//                     // axios.post("/api/post/comment/like", {commentId: comment._id.toString()})
-//                     // .then(res => comment = res.data.comment)
-//                     const response = await LikeAComment(comment._id)
-//                   }}><ThumbsUp className="w-4 h-4 text-gray-600" /></button>
-//                   <span className="text-gray-600 text-sm">{ comment.likes.length }</span>
-//                 </div>
-//                 <div className="flex items-center space-x-1">
-//                   <ThumbsDown className="w-4 h-4 text-gray-600" />
-//                   <span className="text-gray-600 text-sm">32</span>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//         </Fragment>
-//         ))
-//       }
-//       </div>
-
-      
-
-//       {/* Bottom Navigation */}
-//       <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md bg-white border-t border-gray-200">
-//         <BottomNavbar />
-//       </div>
-
-//       {/* Spacer for fixed bottom nav */}
-//       <div className="h-16"></div>
-//     </div>
-//   )
-//   }
- 
-// }
-
-// export default Post
-
-
 
 const PostRoute = async ({params}) => {
   const {postid} = await params
@@ -273,61 +40,177 @@ const PostRoute = async ({params}) => {
 
   console.log(postid)
   return (
-    <>
-    <section>
-      <div className=" flex gap-5 items-center">
-        <Image src={post.createdBy.profilePic} width={50} height={50} alt="post" />
-        <section>
-          <p>{post.createdBy.name}</p>
-          <p>{post.createdBy.username}</p>
-        </section>
-      </div>
-      <Image src={post.file} width={40} height={40} alt="post"  />
-      <section>
-        <p>{post.title}</p>
-        <div className="flex gap-5 items-center">
-          <span>likes {post.likes?.length || 0}</span>
-          <span>comments {post.comments?.length || 0}</span>
-          <span>saves {post.saved?.length || 0}</span>
+    <div className="min-h-screen bg-gray-50/30">
+      <div className="max-w-2xl mx-auto px-4 py-8">
+        {/* Main Post Card */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 overflow-hidden mb-8 hover:shadow-md transition-shadow duration-300">
+          {/* Post Header */}
+          <div className="p-6 border-b border-gray-50">
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <Image 
+                  src={post.createdBy.profilePic} 
+                  width={56} 
+                  height={56} 
+                  alt="Profile" 
+                  className="rounded-full object-cover ring-2 ring-white shadow-sm"
+                />
+                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-gray-900 text-lg">{post.createdBy.name}</h3>
+                <p className="text-gray-500 text-sm">@{post.createdBy.username}</p>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-gray-400">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                </svg>
+                <span>2 hours ago</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Post Image */}
+          <div className="relative bg-gradient-to-br from-gray-50 to-gray-100">
+            <Image 
+              src={post.file} 
+              width={600} 
+              height={400} 
+              alt="Post content" 
+              className="w-full h-auto object-cover"
+            />
+          </div>
+
+          {/* Post Content */}
+          <div className="p-6">
+            <p className="text-gray-900 text-lg font-medium leading-relaxed mb-4">{post.title}</p>
+            
+            {/* Engagement Stats */}
+            <div className="flex items-center justify-between py-4 border-t border-gray-50">
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2 text-gray-600 hover:text-red-500 transition-colors cursor-pointer">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                  </svg>
+                  <span className="font-medium text-sm">{post.likes?.length || 0}</span>
+                </div>
+                
+                <div className="flex items-center gap-2 text-gray-600 hover:text-blue-500 transition-colors cursor-pointer">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                  <span className="font-medium text-sm">{post.comments?.length || 0}</span>
+                </div>
+
+                <div className="flex items-center gap-2 text-gray-600 hover:text-emerald-500 transition-colors cursor-pointer">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                  </svg>
+                  <span className="font-medium text-sm">{post.saved?.length || 0}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-      </section>
-    </section>
-    <section>
-      <form action={
-        async (form: FormData) => {
-          "use server"
-          await ConnectDB()
-          const content = form.get("comment") as string
-          console.log(typeof content, await Comment.validate({content, createdBy: decode.id, post: postid}))
-          // const comment = await (Comment as any).create({content, createdBy: decode.id, post: postid}, {new: true})
-          // await Post.findByIdAndUpdate(postid, {$push: {comments: comment._id}})
-        }
-      } className="border-2">
-        <textarea name="comment"></textarea>        
-        <Button type="submit">Submit</Button>
-      </form>
-    </section>
-    <section>
-      {
-        post.comments.map((comment) => (
-          <div key={comment._id} className="flex gap-5 items-center">
-            <Image src={comment.createdBy.profilePic} width={50} height={50} alt="post" />
-            <section>
-              <p>{comment.createdBy.name}</p>
-              <p>{comment.createdBy.username}</p>
-            </section>
-            <section>
-              <p>{comment.content}</p>
-              <div className="flex gap-5 items-center">
-                <span>likes {comment.likes?.length || 0}</span>
+        {/* Comment Form */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 p-6 mb-8">
+          <form action={
+            async (form: FormData) => {
+              "use server"
+              await ConnectDB()
+              const content = form.get("comment") as string
+              console.log(typeof content, await Comment.validate({content, createdBy: decode.id, post: postid}))
+              const comment = await (Comment as any).create({content, createdBy: decode.id, post: postid})
+              await Post.findByIdAndUpdate(postid, {$push: {comments: comment._id}})
+              revalidatePath(`/post/{postid}`)
+            }
+          } className="space-y-4">
+            <div className="relative">
+              <textarea 
+                name="comment"
+                placeholder="Share your thoughts..." 
+                className="w-full p-4 pr-12 bg-gray-50/50 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 min-h-[100px]"
+                rows={3}
+              />
+              <div className="absolute bottom-3 right-3">
+                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m2-10H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2z" />
+                </svg>
               </div>
-            </section>
-          </div>
-        ))
-      }
-    </section>
-    </>
+            </div>
+            
+            <div className="flex justify-end">
+              <Button 
+                type="submit" 
+                className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 px-6 py-2.5 rounded-xl font-medium text-white shadow-sm hover:shadow-md transition-all duration-200 border-0 focus:ring-2 focus:ring-blue-500/20"
+              >
+                Post Comment
+              </Button>
+            </div>
+          </form>
+        </div>
+
+        {/* Comments Section */}
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-gray-900 mb-6">
+            Comments ({post.comments?.length || 0})
+          </h2>
+          
+          {post.comments.length > 0 ? (
+            post.comments.map((comment) => (
+              <div key={comment._id} className="bg-white rounded-xl shadow-sm border border-gray-100/80 p-6 hover:shadow-md transition-shadow duration-200">
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <Image 
+                      src={comment.createdBy.profilePic || "/defaultProfile.png"}
+                      width={44} 
+                      height={44} 
+                      alt="Commenter profile" 
+                      className="rounded-full object-cover ring-2 ring-gray-100"
+                    />
+                  </div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-2">
+                      <h4 className="font-semibold text-gray-900">{comment.createdBy.name}</h4>
+                      <span className="text-gray-500 text-sm">@{comment.createdBy.username}</span>
+                      <span className="text-gray-300">•</span>
+                      <span className="text-gray-400 text-xs">1h ago</span>
+                    </div>
+                    
+                    <p className="text-gray-700 leading-relaxed mb-3">{comment.content}</p>
+                    
+                    <div className="flex items-center gap-4">
+                      <button className="flex items-center gap-2 text-gray-500 hover:text-red-500 transition-colors text-sm">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                        </svg>
+                        <span className="font-medium">{comment.likes?.length || 0}</span>
+                      </button>
+                      
+                      <button className="text-gray-500 hover:text-blue-500 transition-colors text-sm font-medium">
+                        Reply
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="bg-white rounded-xl border border-gray-100/80 p-12 text-center">
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">No comments yet</h3>
+              <p className="text-gray-500">Be the first to share your thoughts!</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   )
 }
 
