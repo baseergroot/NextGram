@@ -10,7 +10,7 @@ export async function LikeAComment(commentId) {
   await ConnectDB()
   let comment:CommentI = await (Comment as any).findById(commentId)
   // console.log(comment.content)
-  if (comment.likes.includes(decode.id)) {
+  if (comment.likes.includes(decode.id as any)) {
     comment = await (Comment as any).findByIdAndUpdate(commentId, {$pull: {likes: decode.id}}, {new: true})
     console.log("unlike:", comment.likes.length)
     return  {success: true,comment}
