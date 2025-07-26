@@ -122,7 +122,7 @@ const PostRoute = async ({params}) => {
               const content = form.get("comment") as string
               console.log(typeof content, await Comment.validate({content, createdBy: decode.id, post: postid}))
               const comment = await (Comment as any).create({content, createdBy: decode.id, post: postid})
-              await Post.findByIdAndUpdate(postid, {$push: {comments: comment._id}})
+              await (Post as any).findByIdAndUpdate(postid, {$push: {comments: comment._id}})
               revalidatePath(`/post/{postid}`)
             }
           } className="space-y-4">
