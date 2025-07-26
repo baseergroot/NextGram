@@ -5,8 +5,8 @@ import { CloudUploadIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Image from "next/image";
-import { Profile } from "@/actions/profile";
 import { ProfileEdit } from "@/actions/profileEdit";
+import Profile from "@/actions/profile";
 
 const Edit = () => {
   const [selectedFile, setSelectedFile] = useState(null);
