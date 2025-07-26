@@ -34,7 +34,10 @@ export default function ProfileComponent({ response }) {
       {/* Profile Section */}
       <section className="px-5 py-8 text-center border-b border-gray-100">
         <div className="w-30 h-30 rounded-full mx-auto mb-5 bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-4xl text-white font-bold shadow-lg">
-          <Image src={!user?.profilePic ? "/defaultprofile" : user?.profilePic} alt='Profile image' width={100} height={100} className='w-full h-full overflow-hidden rounded-full object-cover'></Image>
+          <Image src={!user?.profilePic ? "/defaultProfile.png" : user?.profilePic} alt='Profile image' width={100} height={100} className='w-full h-full overflow-hidden rounded-full object-cover'></Image>
+          {/* {
+            !user ? <Image src="/defaultProfile.png" alt='Profile image' width={100} height={100} className='w-full h-full overflow-hidden rounded-full object-cover'/> : <Image src={ user?.profilePic } alt='Profile image' width={100} height={100} className='w-full h-full overflow-hidden rounded-full object-cover'/>
+          } */}
         </div>
 
         <h2 className="text-2xl font-bold text-gray-900 mb-1">{user?.name}</h2>

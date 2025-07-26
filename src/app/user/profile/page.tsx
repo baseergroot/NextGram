@@ -16,7 +16,7 @@ export default async function ProfilePage() {
    const user = await (User as any).findById(decode.id)
       .select("-password")
       .populate("posts", "file");
-    console.log({ user });
+  console.log({ user });
 
   const response = {
       _id: user._id.toString(),
