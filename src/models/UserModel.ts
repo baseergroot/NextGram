@@ -25,13 +25,13 @@ const UserSchema = new Schema({
   bio: String,
   posts: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Types.ObjectId,
       ref: "Post"
     },
   ],
   saved: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Types.ObjectId,
       ref: "Post"
     }
     
