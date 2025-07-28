@@ -1,7 +1,7 @@
 "use client"
 
 import NavbarComponent from '@/components/Navbar';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { UserI } from '@/types/UserType';
 import { useRouter } from 'next/navigation';
@@ -12,8 +12,9 @@ export default function ProfileComponent({ response }) {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<string>('posts');
   const [user, setUser] = useState<UserI>()
+  console.log({response})
 
-  useEffect(() => response.success ? setUser(response.user) : console.log("something went wrong")
+  useEffect(() => response ? setUser(response) : console.log("something went wrong")
   , [])
 
   const stats: { number: number; label: string }[] = [
@@ -22,16 +23,12 @@ export default function ProfileComponent({ response }) {
     { number: user?.followings.length, label: 'Following' }
   ];
 
-  const contentItems: { id: number }[] = Array.from({ length: 9 }, (_, i) => ({
-    id: i + 1
-  }));
-
   return (
     <div className="max-w-sm mx-auto bg-white min-h-screen border border-gray-200 relative">
       {/* Header */}
       <NavbarComponent profilePic={user?.profilePic} />
-
-      {/* Profile Section */}
+      <Suspense>
+        {/* Profile Section */}
       <section className="px-5 py-8 text-center border-b border-gray-100">
         <div className="w-30 h-30 rounded-full mx-auto mb-5 bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-4xl text-white font-bold shadow-lg">
           <Image src={!user?.profilePic ? "/defaultProfile.png" : user?.profilePic} alt='Profile image' width={100} height={100} className='w-full h-full overflow-hidden rounded-full object-cover'></Image>
@@ -106,6 +103,8 @@ export default function ProfileComponent({ response }) {
           </div>
         ))}
       </div>
+      </Suspense>
+      
       <BottomNavbar />
     </div>
   );

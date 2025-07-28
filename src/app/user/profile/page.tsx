@@ -26,7 +26,6 @@ export default async function ProfilePage() {
       profilePic: user.profilePic,
       followers: user.followers.map((id: any) => id.toString()),
       followings: user.followings.map((id: any) => id.toString()),
-      followedByCurrentUser: !!user.followedByCurrentUser,
       saved: user.saved.map((id: any) => id.toString()),
       posts: user.posts.map((p: any) => ({
         id: p._id.toString(),
