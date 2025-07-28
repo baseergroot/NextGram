@@ -12,9 +12,16 @@ export default function ProfileComponent({ response }) {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<string>('posts');
   const [user, setUser] = useState<UserI>()
-  console.log({response})
 
-  useEffect(() => response ? setUser(response) : console.log("something went wrong")
+  useEffect(() => {
+    console.log({response})
+    // response ? setUser(response) : console.log("something went wrong")
+    try {
+      setUser(response)
+    } catch (error) {
+      console.log("error something went wrong", error.message)
+    }
+  }
   , [])
 
   const stats: { number: number; label: string }[] = [

@@ -10,8 +10,8 @@ import Profile from "@/actions/profile";
 
 const Edit = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState<string>(null);
+  const [username, setUsername] = useState<string>(null);
   const [profilePic, setProfilePic] = useState(null)
   const [success, setSuccess] = useState<boolean>(false)
 
@@ -25,7 +25,7 @@ const Edit = () => {
     Fetch()
   }, []);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     console.log("selectedFile:", selectedFile);
     const formdata = new FormData();
