@@ -5,7 +5,7 @@ const postSchema = new Schema({
   file: String,
   createdBy: { type: Types.ObjectId, ref: "User", required: true },
   likes: [{ type: Types.ObjectId, ref: "User" }],
-  comments: [{ type: Types.ObjectId, ref: Comment }],
+  comments: [{ type: Types.ObjectId, ref: "Comment" }],
   saved: [{ type: Types.ObjectId, ref: "User" }],
 })
 

@@ -3,7 +3,7 @@ import FeedDetails from "@/components/(feed)/details";
 import FeedHeader from "@/components/(feed)/header";
 import BottomNavbar from "@/components/BottomNavbar"
 import NavbarComponent from "@/components/Navbar"
-import { Fragment } from "react";
+import { Fragment, Suspense } from "react";
 import ConnectDB from "@/lib/ConnectDb"
 import loggedInUser, { Decode } from "@/lib/getLoggedInUser";
 import Post from "@/models/PostModel";
@@ -51,7 +51,8 @@ const FeedPage = async () => {
     return (
         <div className="w-full h-full scroll-smooth">
             <NavbarComponent profilePic={profilePic} />
-            <main className=" mb-10 flex flex-col gap-3 mx-auto mt-5 lg:mt-10 md:w-2/3 lg:max-w-6/10 lg:max-h-9/10 xl:max-w-3/10">
+            <Suspense fallback={<p>Loading...</p>}>
+                <main className=" mb-10 flex flex-col gap-3 mx-auto mt-5 lg:mt-10 md:w-2/3 lg:max-w-6/10 lg:max-h-9/10 xl:max-w-3/10">
                 {
                     posts.map(post => (
                         <Fragment key={post._id as string}>
@@ -62,6 +63,7 @@ const FeedPage = async () => {
                     ))
                 }
             </main>
+            </Suspense>
             <BottomNavbar />
         </div>
 

@@ -157,8 +157,8 @@ const PostRoute = async ({params}) => {
             Comments ({post.comments?.length || 0})
           </h2>
           
-          {post.comments.length > 0 ? (
-            post.comments.map((comment) => (
+          {comments.length > 0 ? (
+            comments.map((comment) => (
               <div key={comment._id} className="bg-white rounded-xl shadow-sm border border-gray-100/80 p-6 hover:shadow-md transition-shadow duration-200">
                 <div className="flex gap-4">
                   <div className="flex-shrink-0">
