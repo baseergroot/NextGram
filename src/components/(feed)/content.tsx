@@ -6,8 +6,8 @@ const FeedContent = ({ file }) => {
       <Image
         src={file}
         alt="post image"
-        width={100}
-        height={100}
+        width={50}
+        height={50}
         className="h-full w-full object-contain bg-gray-100/70 rounded"
       />
     </section>

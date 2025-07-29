@@ -10,6 +10,6 @@ export async function ProfileEdit(data) {
   console.log(name, username, profilePic)
   const decode:Decode = await loggedInUser()
 
-  const user = await (User as any).findByIdAndUpdate(decode.id, {name, username, profilePic})
+  await (User as any).findByIdAndUpdate(decode.id, {name, username, profilePic})
   return { success: true }
 }
