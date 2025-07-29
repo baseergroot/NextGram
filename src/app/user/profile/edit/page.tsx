@@ -1,18 +1,24 @@
+import EditForm from "@/components/EditProfile";
 import ConnectDB from "@/lib/ConnectDb";
 import loggedInUser, { Decode } from "@/lib/getLoggedInUser";
 import User from "@/models/UserModel";
 import { UserI } from "@/types/UserType";
-import Image from "next/image";
 
 await ConnectDB()
 
 export default async function Page() {
   const decode: Decode = await loggedInUser()
-  const user:UserI = await (User as any).findById(decode.id).select("-password");
+  let user:UserI = await (User as any).findById(decode.id).select("-password");
+  user = {
+    username: user.username,
+    name: user.name,
+    profilePic: user.profilePic,
+    _id: user._id.toString(),
+  }
   console.log({user})
   return (
     <div>
-      <h1>Under Development</h1>
+      <EditForm userDetail={user} />
     </div>
   )
 }

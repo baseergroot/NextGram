@@ -11,5 +11,5 @@ export async function ProfileEdit(data) {
   const decode:Decode = await loggedInUser()
 
   const user = await (User as any).findByIdAndUpdate(decode.id, {name, username, profilePic: file})
-  return { success: true, user }
+  return { success: true }
 }
