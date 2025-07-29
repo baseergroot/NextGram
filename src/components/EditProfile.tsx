@@ -24,6 +24,7 @@ const EditForm = ({ userDetail }) => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log({user})
     await ProfileEdit(user);
     console.log("Updated User:", user);
   };
@@ -39,11 +40,11 @@ const EditForm = ({ userDetail }) => {
     width: 1,
   });
   return (
-    <div className='w-full max-w-md mx-auto bg-white rounded-lg'>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-1 py-10 my-10 px-5 shadow-2xl'>
+    <div className='w-full lg:w-[50vw] max-w-md mx-auto bg-white rounded-lg'>
+      <h1 className='text-center pt-5 my-10 text-2xl'>Edit Profile</h1>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-1 py-10 my-5 px-5 shadow-2xl w-9/10 mx-auto rounded'>
         <div className='flex items-center gap-2 mb-4'>
           <div className="mb-2 flex flex-col items-center">
-            <Label htmlFor="profilePic">Profile Picture</Label>
             <Image src={user.profilePic} alt='Profile Pic' width={30} height={30} className='rounded-full object-cover w-20 h-20 border-2 border-gray-300' unoptimized/>
           </div>
           {/* <input
