@@ -52,7 +52,7 @@ const Page = async () => {
         <div className="w-full h-full scroll-smooth">
             <NavbarComponent profilePic={profilePic} />
             <Suspense fallback={<p>Loading...</p>}>
-                <main className=" mb-10 flex flex-col gap-3 mx-auto mt-5 h-8/10 lg:mt-10 md:w-2/3 lg:max-w-6/10 lg:max-h-9/10 xl:max-w-3/10">
+                <main className=" mb-10 flex flex-col gap-3 mx-auto mt-5 max-h-8/10 overflow-hidden bg-amber-400 lg:mt-10 md:w-2/3 lg:max-w-6/10 lg:max-h-9/10 xl:max-w-3/10">
                 {
                     posts.map(post => (
                         <Fragment key={post._id as string}>
