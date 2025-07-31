@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useState, useEffect, Fragment } from 'react';
 import BottomNavbar from "@/components/BottomNavbar"
 import { Saved } from '@/actions/savedPosts';
+import Image from 'next/image';
 
 export default function SavedPostsPage() {
   const [activeTab, setActiveTab] = useState('all');
@@ -197,9 +198,11 @@ export default function SavedPostsPage() {
             <Fragment
               key={post._id as string} >
               <div onClick={() => handlePostClick(post._id)} className="aspect-square group cursor-pointer rounded-2xl relative overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg bg-gray-200">
-                <img
+                <Image
                   src={getImageUrl(post.file)}
                   alt="Saved post"
+                  width={30}
+                  height={30}
                   className="w-full h-full object-cover"
                 />
 
