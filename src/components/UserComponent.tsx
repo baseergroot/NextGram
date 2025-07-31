@@ -9,12 +9,13 @@ import BottomNavbar from "@/components/BottomNavbar"
 import { PostI } from '@/types/PostType';
 import { FollowAction } from '@/actions/follow';
 
-export default function UserComponent({ userDetail, posts }) {
+export default function UserComponent({ userDetail, posts, following }) {
   console.log("followers",userDetail.followers)
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<string>('posts');
   const [user, setUser] = useState<UserI>()
   const [followers, setFollowers] = useState<number>(userDetail?.followers.length)
+  const [isFollowing, setIsFollowing] = useState<boolean>(following)
 
   useEffect(() => userDetail ? setUser(userDetail) : console.log("something went wrong")
   , [])
@@ -26,7 +27,11 @@ export default function UserComponent({ userDetail, posts }) {
   ];
   const handleFollow = async () => {
     const response = await FollowAction(userDetail._id)
-    response.success && setFollowers(response.userFollowers.length)
+    if (response.success) {
+      setIsFollowing(prev => !prev)
+      setFollowers(response.userFollowers.length)
+      console.log("Followers updated:", response.userFollowers.length);
+    }
   }
 
   return (
@@ -49,7 +54,7 @@ export default function UserComponent({ userDetail, posts }) {
           className="bg-gray-900 text-white px-10 py-3 rounded-full text-base font-semibold hover:bg-gray-700 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg mb-6"
           onClick={handleFollow}
         >
-          Follow
+          { isFollowing ? "Followed" : "Follow" } 
         </button>
 
         {/* Stats */}
@@ -67,9 +72,9 @@ export default function UserComponent({ userDetail, posts }) {
       </section>
 
       {/* Bio */}
-      <div className="px-5 pb-5 text-center text-gray-700 text-sm leading-relaxed">
+      {/* <div className="px-5 pb-5 text-center text-gray-700 text-sm leading-relaxed">
         {user?.bio ? user.bio : "edit profile"}
-      </div>
+      </div> */}
 
 
       {/* Navigation Tabs */}
@@ -100,7 +105,7 @@ export default function UserComponent({ userDetail, posts }) {
           <div
             key={item._id as string}
             className="aspect-square bg-gray-200 rounded flex items-center justify-center text-4xl text-gray-600 font-bold cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-gray-300 "
-            onClick={() => console.log(`Content item ${item.file} clicked`)}
+            onClick={() => router.push(`/post/${item._id}`)}
           >
             <Image src={item.file} alt='post' width={100} height={100} className=' h-full object-contain w-full rounded'></Image>
           </div>

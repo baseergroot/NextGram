@@ -12,7 +12,6 @@ export async function FollowAction(userId: string) {
   let user: UserI = await (User as any).findByIdAndUpdate(userId, { $push: { followers: decode.id } })
 
   await ConnectDB()
-  try {
     if (decode.id == userId) {
       console.log("cannot follow yourself")
       return { success: false, message: "cannot follow yourself" }
@@ -20,19 +19,16 @@ export async function FollowAction(userId: string) {
     if (user.followers.includes(userId)) {
       user = await (User as any).findByIdAndUpdate(userId, { $pull: { followers: decode.id } })
       await (User as any).findByIdAndUpdate(decode.id, { $pull: { followings: userId } })
-      console.log("successfully unfollowed")
+      console.log("successfully unfollowed", user.followers.length)
       return { success: true, 
         userFollowers: user.followers.map(_id => _id.toString()) }
     }
     else {
       user = await (User as any).findByIdAndUpdate(userId, { $push: { followers: decode.id } })
       await (User as any).findByIdAndUpdate(decode.id, { $push: { followings: userId } })
-      console.log("successfully followed")
+      console.log("successfully followed", user.followers.length)
       return { success: true, 
         userFollowers: user.followers.map(_id => _id.toString()) }
     }
-  } catch (error) {
-    return { success: false, error }
-  }
 }
 

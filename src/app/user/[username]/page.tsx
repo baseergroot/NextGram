@@ -1,5 +1,6 @@
 import UserComponent from "@/components/UserComponent"
 import ConnectDB from "@/lib/ConnectDb"
+import loggedInUser, { Decode } from "@/lib/getLoggedInUser"
 import Post from "@/models/PostModel"
 import User from "@/models/UserModel"
 import { PostI } from "@/types/PostType"
@@ -26,7 +27,10 @@ export default async function UserPage({params}) {
     title: post.title,
     file: post.file
   }))
+  const decode:Decode = await loggedInUser()
+  let following: boolean = user.followers.includes(decode.id)
+  
   // console.log({user}, posts[0])
 
-  return <UserComponent userDetail={user} posts={posts} />
+  return <UserComponent userDetail={user} posts={posts} following={following}/>
 }
