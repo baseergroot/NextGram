@@ -1,40 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NextGram
+
+NextGram is a modern social media platform inspired by Instagram, built with the latest features of Next.js and React. It leverages full-stack technologies for an interactive, secure, and scalable experience.
+
+[Live Demo](https://nextgram-dev.vercel.app/)
+
+---
+
+## Features
+
+- **User Profiles & Feeds:** Browse posts, follow users, and view personalized feeds.
+- **Post Sharing & Media Uploads:** Seamless sharing of images and updates.
+- **Responsive UI:** Beautiful and adaptable across devices with Tailwind CSS and Flowbite-React.
+- **Next.js App Router:** Utilizes the latest routing and layouts.
+- **SSR (Server-Side Rendering):** Fast initial loads and SEO-friendly pages.
+- **Server Actions for Mutations:** Secure and efficient data mutations using Next.js server actions.
+- **React Server Components:** Fetches database data on the server for better performance and security.
+- **JWT-based Authentication:** Secure authentication using JSON Web Tokens and Next.js cookies.
+- **Protected Routes with Middleware:** Ensures only authenticated users can access certain pages, and prevents logged-in users from accessing auth routes.
+- **MongoDB Database:** Stores user profiles, posts, and interactions.
+- **React Icons:** Clean, modern iconography throughout the UI.
+- **TypeScript Strict Mode:** Type-safe and robust codebase.
+
+---
+
+## Tech Stack
+
+- **Framework:** Next.js (App Router, SSR, Server Actions, Server Components)
+- **Language:** TypeScript
+- **Database:** MongoDB
+- **Styling:** Tailwind CSS, Flowbite-React
+- **Icons:** React Icons
+- **Authentication:** JWT (JSON Web Tokens), Next.js Cookies
+- **Route Protection:** Next.js Middleware
+
+---
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/baseergroot/NextGram.git
+   cd NextGram
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Set up environment variables:**
+   - Copy `.env.example` to `.env.local` and fill in your MongoDB URI, JWT secret, and other configuration.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) to see the app.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Core Concepts
 
-To learn more about Next.js, take a look at the following resources:
+- **SSR (Server-Side Rendering):** Most pages are rendered on the server for fast load times and SEO.
+- **Server Actions:** All data mutations (creating posts, following users, etc.) are securely handled server-side.
+- **Server Components:** Data fetching from MongoDB occurs in server components for performance and security.
+- **JWT Authentication & Cookies:** User sessions are managed with JWT and stored in HTTP-only cookies.
+- **Middleware Route Protection:** Middleware ensures only authenticated users can access protected routes, and prevents access to auth pages if already logged in.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contributing
 
-## Deploy on Vercel
+Contributions are welcome! Please open an issue or submit a pull request.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# NextGram
-# NextGram
-# NextGram
-# NextGram
+## License
+
+This project is currently unlicensed.
+
+---
+
+## Author
+
+- [baseergroot](https://github.com/baseergroot)
