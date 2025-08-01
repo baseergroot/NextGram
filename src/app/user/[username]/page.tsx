@@ -29,7 +29,7 @@ export default async function UserPage({params}) {
   }))
   const decode:Decode = await loggedInUser()
   let following: boolean = user.followers.includes(decode.id)
-  
+  // console.log("Following status:", following)
   // console.log({user}, posts[0])
 
   return <UserComponent userDetail={user} posts={posts} following={following}/>

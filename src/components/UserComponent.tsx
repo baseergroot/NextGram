@@ -10,7 +10,7 @@ import { PostI } from '@/types/PostType';
 import { FollowAction } from '@/actions/follow';
 
 export default function UserComponent({ userDetail, posts, following }) {
-  console.log("followers",userDetail.followers)
+  console.log("followers",userDetail.followers,  following)
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<string>('posts');
   const [user, setUser] = useState<UserI>()
@@ -51,7 +51,7 @@ export default function UserComponent({ userDetail, posts, following }) {
         <p className="text-base text-gray-500 mb-5">Content Creator</p>
 
         <button
-          className="bg-gray-900 text-white px-10 py-3 rounded-full text-base font-semibold hover:bg-gray-700 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg mb-6"
+          className={`bg-gray-900 text-white px-10 py-3 rounded-full text-base font-semibold hover:bg-gray-700 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg mb-6 ${isFollowing ? 'bg-gray-600' : 'bg-gray-900'}`}
           onClick={handleFollow}
         >
           { isFollowing ? "Followed" : "Follow" } 

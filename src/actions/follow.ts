@@ -9,24 +9,24 @@ export async function FollowAction(userId: string) {
   const decode = await loggedInUser()
   // console.log(decode.id, userId)
   
-  let user: UserI = await (User as any).findByIdAndUpdate(userId, { $push: { followers: decode.id } })
+  let user: UserI = await (User as any).findById(userId)
 
   await ConnectDB()
     if (decode.id == userId) {
       console.log("cannot follow yourself")
       return { success: false, message: "cannot follow yourself" }
     }
-    if (user.followers.includes(userId)) {
-      user = await (User as any).findByIdAndUpdate(userId, { $pull: { followers: decode.id } })
+    if (user.followers.includes(decode.id)) {
+      user = await (User as any).findByIdAndUpdate(userId, { $pull: { followers: decode.id } }, { new: true })
       await (User as any).findByIdAndUpdate(decode.id, { $pull: { followings: userId } })
-      console.log("successfully unfollowed", user.followers.length)
+      // console.log("successfully unfollowed", user.followers.length)
       return { success: true, 
         userFollowers: user.followers.map(_id => _id.toString()) }
     }
     else {
-      user = await (User as any).findByIdAndUpdate(userId, { $push: { followers: decode.id } })
+      user = await (User as any).findByIdAndUpdate(userId, { $push: { followers: decode.id } }, { new: true })
       await (User as any).findByIdAndUpdate(decode.id, { $push: { followings: userId } })
-      console.log("successfully followed", user.followers.length)
+      // console.log("successfully followed", user.followers.length)
       return { success: true, 
         userFollowers: user.followers.map(_id => _id.toString()) }
     }
