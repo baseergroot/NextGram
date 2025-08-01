@@ -8,7 +8,6 @@ import { useState } from "react";
 
 export default function Create() {
   const router = useRouter()
-  // const [imageUploaded, setImageUploaded] = useState(null)
   const [success, setSuccess] = useState<boolean>(false)
   const [file, setFile] = useState<string>(null)
   const handleAction = async (form: FormData) => {
@@ -49,16 +48,28 @@ export default function Create() {
               </p>
               <span className="px-4 py-1 bg-gray-200 rounded mt-3">Upload</span>
             </div>
-            <FileInput aria-required id="dropzone-file" className="hidden" name="file" required onChange={e => {
+
+            <FileInput aria-required id="dropzone-file" className="hidden" name="file" required onChange={ async e => {
               const formData = new FormData();
               formData.append("file", e.target.files[0]);
               formData.append("upload_preset", "nextgram");
-              axios.post(
-                process.env.NEXT_PUBLIC_CLOUDNARY_IMAGE_URL,
+              console.log("file type", e.target.files[0].type);
+              const cloudnaryUrl: string = e.target.files[0].type.startsWith("image/") ? process.env.NEXT_PUBLIC_CLOUDNARY_IMAGE_URL : 
+                e.target.files[0].type.startsWith("video/") ? process.env.NEXT_PUBLIC_CLOUDNARY_VIDEO_URL : null
+              console.log("cloudnary url", cloudnaryUrl);
+              if (cloudnaryUrl) {
+                axios.post(
+                cloudnaryUrl,
                 formData
-              ).then(res => setFile(res.data.secure_url))
+              ).then(res => {
+                setFile(res.data.secure_url)
+                console.log("file uploaded successfully", res.data.secure_url);
+              })
                 .catch(err => console.log("error agaya lamandu, ziyada cool ban rahe the na sub kuch tek tha:", err.message))
+              }
+              else console.log("cloudnary url not set, check your environment variables");
             }} />
+
           </Label>
         </div>
         <div className="w-9/10">

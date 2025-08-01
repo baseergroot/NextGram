@@ -2,8 +2,10 @@ import withFlowbiteReact from "flowbite-react/plugin/nextjs";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // experimental: {
+  //   browserDebugInfoInTerminal: true
+  // },
   images: {
-    unoptimized: false,
     domains: ["res.cloudinary.com", "asset.cloudinary.com"],
   },
 };

@@ -1,6 +1,7 @@
-import { model, models, Schema, Types } from "mongoose";
+import { CommentI } from "@/types/CommentType";
+import { Model, model, models, Schema, Types } from "mongoose";
 
-const commentSchema = new Schema({
+const commentSchema = new Schema<CommentI>({
   createdBy: {
     type: Types.ObjectId,
     ref: "User",
@@ -19,14 +20,9 @@ const commentSchema = new Schema({
     type: Types.ObjectId,
     ref: "User",
     default: [],
-  }],
-  dislikes: [{
-    type: Types.ObjectId,
-    ref: "User",
-    default: [],
   }]
 });
 
-const Comment = models.Comment || model("Comment", commentSchema);
+const Comment = models.Comment || model<CommentI>("Comment", commentSchema);
 
-export default Comment;
+export default Comment as Model<CommentI>;

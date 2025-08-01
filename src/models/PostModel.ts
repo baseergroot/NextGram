@@ -1,6 +1,7 @@
-import { model, models, Schema, Types } from  "mongoose";
+import { PostI } from "@/types/PostType";
+import { Model, model, models, Schema, Types } from  "mongoose";
 
-const postSchema = new Schema({
+const postSchema = new Schema<PostI>({
   title: String,
   file: String,
   createdBy: { type: Types.ObjectId, ref: "User", required: true },
@@ -9,6 +10,6 @@ const postSchema = new Schema({
   saved: [{ type: Types.ObjectId, ref: "User" }],
 })
 
-const Post = models.Post || model("Post", postSchema)
+const Post = models.Post || model<PostI>("Post", postSchema)
 
-export default Post
+export default Post as Model<PostI>

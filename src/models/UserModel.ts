@@ -1,6 +1,9 @@
-import mongoose, { model, models, Schema, Types } from "mongoose";
+import ConnectDB from "@/lib/ConnectDb";
+import { UserI } from "@/types/UserType";
+import { Model, model, models, Schema, Types } from "mongoose";
 
-const UserSchema = new Schema({
+// await ConnectDB()
+const UserSchema = new Schema<UserI>({
   name: {
     type: String,
     required: true,
@@ -44,5 +47,5 @@ const UserSchema = new Schema({
   followings: [{ type: Types.ObjectId, ref: "User" }],
 });
 
-const User = models.User || model("User", UserSchema);
-export default User;
+const User = models.User || model<UserI>("User", UserSchema);
+export default User as Model<UserI>;
