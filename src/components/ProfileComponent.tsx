@@ -39,9 +39,6 @@ export default function ProfileComponent({ response }) {
       <section className="px-5 py-8 text-center border-b border-gray-100">
         <div className="w-30 h-30 rounded-full mx-auto mb-5 bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-4xl text-white font-bold shadow-lg">
           <Image src={!user?.profilePic ? "/defaultProfile.png" : user?.profilePic} alt='Profile image' width={100} height={100} className='w-full h-full overflow-hidden rounded-full object-cover'></Image>
-          {/* {
-            !user ? <Image src="/defaultProfile.png" alt='Profile image' width={100} height={100} className='w-full h-full overflow-hidden rounded-full object-cover'/> : <Image src={ user?.profilePic } alt='Profile image' width={100} height={100} className='w-full h-full overflow-hidden rounded-full object-cover'/>
-          } */}
         </div>
 
         <h2 className="text-2xl font-bold text-gray-900 mb-1">{user?.name}</h2>
@@ -101,13 +98,15 @@ export default function ProfileComponent({ response }) {
       {/* Content Grid */}
       <div className="grid grid-cols-2 gap-2 p-2 bg-gray-50 mb-15">
         {!user ? "no post to see" : user.posts?.map((item: PostI, index) => (
-          <div
+          <button
             key={index}
             className="aspect-square bg-gray-200 rounded flex items-center justify-center text-4xl text-gray-600 font-bold cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-gray-300 "
-            onClick={() => console.log(`Content item ${item.file} clicked`)}
+            onClick={() => router.push(`post/${item._id}`)}
           >
-            <Image src={item.file} alt='post' width={100} height={100} className=' h-full object-contain w-full rounded'></Image>
-          </div>
+            {
+              item.file.endsWith(".mp4") ? <video controls src={item.file} className=' h-full object-contain w-full rounded'></video> :
+              <Image src={item.file} alt='post' width={100} height={100} className=' h-full object-contain w-full rounded'></Image>}
+          </button>
         ))}
       </div>
       </Suspense>
