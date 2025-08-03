@@ -9,14 +9,14 @@ export interface Decode {
     id: string
 }
 
-const loggedInUser = async () => {
+const loggedInUser = async ():Promise<Decode> => {
   const cookie = await cookies()
     const token = cookie.get("token")
     if (!token) {
       console.log("you are not loggen in")
     }
 
-    const decode:Decode = verify(token.value, process.env.JWT_SECRET)
+    const decode = verify(token.value, process.env.JWT_SECRET)
     // console.log({decode})
 
     return decode

@@ -1,6 +1,7 @@
 "use client"
 import { isLoggedinAction } from "@/actions/isLoggedin";
 import { Logout } from "@/actions/logout";
+import loggedInUser from "@/lib/getLoggedInUser";
 import axios from "axios";
 import {
   Avatar,
@@ -20,12 +21,15 @@ import { useEffect, useState } from "react";
 
 const NavbarComponent = ({ profilePic }) => {
   const [isLoggedin, setIsloggedin] = useState<boolean>(false)
+  const [user, setUser] = useState<{name: string, username: string} | null>()
   const router = useRouter()
   useEffect(() => {
     async function Fetch() {
       const response:boolean = await isLoggedinAction()
       console.log( response )
       response ? setIsloggedin(true) : setIsloggedin(false)
+      const decode = await loggedInUser()
+      setUser({name: decode.name, username: decode.username})
     }
     Fetch()
   },[])
@@ -45,8 +49,8 @@ const NavbarComponent = ({ profilePic }) => {
           }
         >
           <DropdownHeader>
-            <span className="block text-sm">Bonnie Green</span>
-            <span className="block truncate text-sm font-medium">name@flowbite.com</span>
+            <span className="block text-sm">{user ? user.name : "Loading..."}</span>
+            <span className="block truncate text-sm font-medium">@{user ? user.username : "Loading..."}</span>
           </DropdownHeader>
           <DropdownItem href="/search">Search</DropdownItem>
           <DropdownItem>Settings</DropdownItem>
