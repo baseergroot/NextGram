@@ -1,3 +1,5 @@
+import LikeButton from "@/components/LikeButton"
+import SaveButton from "@/components/SaveButton"
 import ConnectDB from "@/lib/ConnectDb"
 import loggedInUser from "@/lib/getLoggedInUser"
 import Comment from "@/models/CommentModel"
@@ -8,23 +10,30 @@ import { Button } from "flowbite-react"
 import { revalidatePath } from "next/cache"
 import Image from "next/image"
 
-const PostRoute = async ({params}) => {
-  const {postid} = await params
+const PostRoute = async ({ params }) => {
+  const { postid } = await params
   const decode = await loggedInUser()
   await ConnectDB()
-  let post: PostI = await (Post as any).findById(postid).populate("createdBy", "name username profilePic").populate("comments", "content createdBy likes")
+  let post: PostI = await Post.findById(postid).populate("createdBy", "name username profilePic").populate({
+    path: "comments", 
+    select:"content createdBy likes",
+    populate: {
+      path: "createdBy",
+      select: "username"
+    }
+  })
   post = {
     _id: post._id.toString(),
     title: post.title,
     file: post.file,
     comments: post.comments.map((comment) => ({
-      _id: comment._id.toString(), 
-      content: comment.content, 
+      _id: comment._id.toString(),
+      content: comment.content,
       createdBy: {
         name: comment.createdBy.name,
         username: comment.createdBy.username,
         profilePic: comment.createdBy.profilePic
-      }, 
+      },
       likes: comment.likes.map((_id) => _id.toString())
     })),
     likes: post.likes.map((_id) => _id.toString()),
@@ -37,6 +46,7 @@ const PostRoute = async ({params}) => {
   }
   let comments = post.comments
   console.log({ post })
+  console.log({ comment: comments[0] })
 
   console.log(postid)
   return (
@@ -45,14 +55,14 @@ const PostRoute = async ({params}) => {
         {/* Main Post Card */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 overflow-hidden mb-8 hover:shadow-md transition-shadow duration-300">
           {/* Post Header */}
-          <div className="p-6 border-b border-gray-50">
+          <div className="p-4 border-b border-gray-50">
             <div className="flex items-center gap-4">
               <div className="relative">
-                <Image 
-                  src={post.createdBy.profilePic} 
-                  width={56} 
-                  height={56} 
-                  alt="Profile" 
+                <Image
+                  src={post.createdBy.profilePic}
+                  width={56}
+                  height={56}
+                  alt="Profile"
                   className="rounded-full object-cover ring-2 ring-white shadow-sm"
                 />
                 <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
@@ -70,44 +80,39 @@ const PostRoute = async ({params}) => {
             </div>
           </div>
 
-          {/* Post Image */}
+          {/* Post media */}
           <div className="relative bg-gradient-to-br from-gray-50 to-gray-100">
-            <Image 
-              src={post.file} 
-              width={600} 
-              height={400} 
-              alt="Post content" 
-              className="w-full h-auto object-cover"
-            />
+            {
+              post.file.endsWith('.mp4') ? <video controls src={post.file}
+                className="w-full h-auto object-cover"></video> :
+                <Image
+                  src={post.file}
+                  width={600}
+                  height={400}
+                  alt="Post content"
+                  className="w-full h-auto object-cover"
+                />
+            }
           </div>
 
           {/* Post Content */}
           <div className="p-6">
             <p className="text-gray-900 text-lg font-medium leading-relaxed mb-4">{post.title}</p>
-            
+
             {/* Engagement Stats */}
             <div className="flex items-center justify-between py-4 border-t border-gray-50">
-              <div className="flex items-center gap-6">
-                <div className="flex items-center gap-2 text-gray-600 hover:text-red-500 transition-colors cursor-pointer">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-                  </svg>
-                  <span className="font-medium text-sm">{post.likes?.length || 0}</span>
-                </div>
-                
+              <div className="flex items-center gap-6 ">
+                <LikeButton post={post} />
+
                 <div className="flex items-center gap-2 text-gray-600 hover:text-blue-500 transition-colors cursor-pointer">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
-                  <span className="font-medium text-sm">{post.comments?.length || 0}</span>
+                  <span className="text-xl">{post.comments?.length || 0}</span>
                 </div>
 
-                <div className="flex items-center gap-2 text-gray-600 hover:text-emerald-500 transition-colors cursor-pointer">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                  </svg>
-                  <span className="font-medium text-sm">{post.saved?.length || 0}</span>
-                </div>
+
+                <SaveButton post={post} />
               </div>
             </div>
           </div>
@@ -120,16 +125,16 @@ const PostRoute = async ({params}) => {
               "use server"
               await ConnectDB()
               const content = form.get("comment") as string
-              console.log(typeof content, await Comment.validate({content, createdBy: decode.id, post: postid}))
-              const comment = await (Comment as any).create({content, createdBy: decode.id, post: postid})
-              await (Post as any).findByIdAndUpdate(postid, {$push: {comments: comment._id}})
+              console.log(typeof content, await Comment.validate({ content, createdBy: decode.id, post: postid }))
+              const comment = await (Comment as any).create({ content, createdBy: decode.id, post: postid })
+              await (Post as any).findByIdAndUpdate(postid, { $push: { comments: comment._id } })
               revalidatePath(`/post/{postid}`)
             }
           } className="space-y-4">
             <div className="relative">
-              <textarea 
+              <textarea
                 name="comment"
-                placeholder="Share your thoughts..." 
+                placeholder="Share your thoughts..."
                 className="w-full p-4 pr-12 bg-gray-50/50 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 min-h-[100px]"
                 rows={3}
               />
@@ -139,10 +144,10 @@ const PostRoute = async ({params}) => {
                 </svg>
               </div>
             </div>
-            
+
             <div className="flex justify-end">
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 px-6 py-2.5 rounded-xl font-medium text-white shadow-sm hover:shadow-md transition-all duration-200 border-0 focus:ring-2 focus:ring-blue-500/20"
               >
                 Post Comment
@@ -156,31 +161,31 @@ const PostRoute = async ({params}) => {
           <h2 className="text-xl font-semibold text-gray-900 mb-6">
             Comments ({post.comments?.length || 0})
           </h2>
-          
+
           {comments.length > 0 ? (
             comments.map((comment) => (
               <div key={comment._id} className="bg-white rounded-xl shadow-sm border border-gray-100/80 p-6 hover:shadow-md transition-shadow duration-200">
                 <div className="flex gap-4">
                   <div className="flex-shrink-0">
-                    <Image 
+                    <Image
                       src={comment.createdBy.profilePic || "/defaultProfile.png"}
-                      width={44} 
-                      height={44} 
-                      alt="Commenter profile" 
+                      width={44}
+                      height={44}
+                      alt="Commenter profile"
                       className="rounded-full object-cover ring-2 ring-gray-100"
                     />
                   </div>
-                  
+
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2">
-                      <h4 className="font-semibold text-gray-900">{comment.createdBy.name}</h4>
-                      <span className="text-gray-500 text-sm">@{comment.createdBy.username}</span>
+                      {/* <h4 className="font-semibold text-gray-900">{comment.createdBy.name || "guest"}</h4> */}
+                      <span className="text-gray-500 text-sm">{comment.createdBy.username || "guest"}</span>
                       <span className="text-gray-300">•</span>
                       <span className="text-gray-400 text-xs">1h ago</span>
                     </div>
-                    
+
                     <p className="text-gray-700 leading-relaxed mb-3">{comment.content}</p>
-                    
+
                     <div className="flex items-center gap-4">
                       <button className="flex items-center gap-2 text-gray-500 hover:text-red-500 transition-colors text-sm">
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -188,7 +193,7 @@ const PostRoute = async ({params}) => {
                         </svg>
                         <span className="font-medium">{comment.likes?.length || 0}</span>
                       </button>
-                      
+
                       <button className="text-gray-500 hover:text-blue-500 transition-colors text-sm font-medium">
                         Reply
                       </button>

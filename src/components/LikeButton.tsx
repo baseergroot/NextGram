@@ -20,3 +20,4 @@ const LikeButton = ({post}) => {
 }
 
 export default LikeButton
+
