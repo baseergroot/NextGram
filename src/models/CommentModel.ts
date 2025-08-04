@@ -1,6 +1,9 @@
+import ConnectDB from "@/lib/ConnectDb";
 import { CommentI } from "@/types/CommentType";
 import { Model, model, models, Schema, Types } from "mongoose";
 
+// await ConnectDB()
+console.log("CommentModel loaded");
 const commentSchema = new Schema<CommentI>({
   createdBy: {
     type: Types.ObjectId,

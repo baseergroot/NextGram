@@ -3,6 +3,7 @@ import { UserI } from "@/types/UserType";
 import { Model, model, models, Schema, Types } from "mongoose";
 
 // await ConnectDB()
+console.log("UserModel loaded");  
 const UserSchema = new Schema<UserI>({
   name: {
     type: String,

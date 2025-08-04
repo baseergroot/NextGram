@@ -3,24 +3,25 @@ import LikeButton from "@/components/LikeButton"
 import SaveButton from "@/components/SaveButton"
 import ConnectDB from "@/lib/ConnectDb"
 import loggedInUser from "@/lib/getLoggedInUser"
-import Comment from "@/models/CommentModel"
+import User from "@/models/UserModel"
 import Post from "@/models/PostModel"
+import Comment from "@/models/CommentModel"
 import { CommentI } from "@/types/CommentType"
 import { PostI } from "@/types/PostType"
 import { Button } from "flowbite-react"
 import { revalidatePath } from "next/cache"
 import Image from "next/image"
 
+await ConnectDB()
 const PostRoute = async ({ params }) => {
   const { postid } = await params
   const decode = await loggedInUser()
-  await ConnectDB()
   let post: PostI = await Post.findById(postid).populate("createdBy", "name username profilePic").populate({
     path: "comments",
     select: "content createdBy likes",
     populate: {
       path: "createdBy",
-      select: "username"
+      select: "name username profilePic"
     }
   })
   post = {

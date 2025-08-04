@@ -1,6 +1,9 @@
+import ConnectDB from "@/lib/ConnectDb";
 import { PostI } from "@/types/PostType";
 import { Model, model, models, Schema, Types } from  "mongoose";
 
+// await ConnectDB()
+console.log("PostModel loaded");
 const postSchema = new Schema<PostI>({
   title: String,
   file: String,
