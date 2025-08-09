@@ -16,3 +16,4 @@ const postSchema = new Schema<PostI>({
 const Post = models.Post || model<PostI>("Post", postSchema)
 
 export default Post as Model<PostI>
+

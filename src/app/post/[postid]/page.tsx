@@ -11,12 +11,14 @@ import { PostI } from "@/types/PostType"
 import { Button } from "flowbite-react"
 import { revalidatePath } from "next/cache"
 import Image from "next/image"
+import { models } from "mongoose"
 
 await ConnectDB()
 const PostRoute = async ({ params }) => {
   const { postid } = await params
   const decode = await loggedInUser()
-  let post: PostI = await Post.findById(postid).populate("createdBy", "name username profilePic").populate({
+  console.log(models);
+  let post: PostI = await Post.findById(postid).populate({path: "createdBy", select: "name username profilePic"}).populate({
     path: "comments",
     select: "content createdBy likes",
     populate: {
@@ -159,7 +161,7 @@ const PostRoute = async ({ params }) => {
         </div>
 
         {/* Comments Section */}
-        <div className="space-y-4">
+        {/* <div className="space-y-4">
           <h2 className="text-xl font-semibold text-gray-900 mb-6">
             Comments ({post.comments?.length || 0})
           </h2>
@@ -193,7 +195,8 @@ const PostRoute = async ({ params }) => {
               <p className="text-gray-500">Be the first to share your thoughts!</p>
             </div>
           )}
-        </div>
+        </div> */}
+        <p className="flex p-5 items-center justify-center bg-yellow-400 rounded-xl text-xl font-bold">In Development</p>
       </div>
     </div>
   )
