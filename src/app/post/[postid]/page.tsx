@@ -196,6 +196,7 @@ const PostRoute = async ({ params }) => {
             </div>
           )}
         </div> */}
+        <h1>Hello</h1>
         <p className="flex p-5 items-center justify-center bg-yellow-400 rounded-xl text-xl font-bold">In Development</p>
       </div>
     </div>
