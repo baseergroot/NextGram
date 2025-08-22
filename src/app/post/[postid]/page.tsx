@@ -26,30 +26,30 @@ const PostRoute = async ({ params }) => {
       select: "name username profilePic"
     }
   })
-  post = {
-    _id: post._id.toString(),
-    title: post.title,
-    file: post.file,
-    comments: post.comments.map((comment) => ({
-      _id: comment._id.toString(),
-      content: comment.content,
-      createdBy: {
-        name: comment.createdBy.name,
-        username: comment.createdBy.username,
-        profilePic: comment.createdBy.profilePic
-      },
-      likes: comment.likes.map((_id) => _id.toString())
-    })),
-    likes: post.likes.map((_id) => _id.toString()),
-    saved: post.saved.map((_id) => _id.toString()),
-    createdBy: {
-      name: post.createdBy.name,
-      username: post.createdBy.username,
-      profilePic: post.createdBy.profilePic
-    }
-  }
+  // post = {
+  //   _id: post._id.toString(),
+  //   title: post.title,
+  //   file: post.file,
+  //   comments: post.comments.map((comment) => ({
+  //     _id: comment._id.toString(),
+  //     content: comment.content,
+  //     createdBy: {
+  //       name: comment.createdBy.name,
+  //       username: comment.createdBy.username,
+  //       profilePic: comment.createdBy.profilePic
+  //     },
+  //     likes: comment.likes.map((_id) => _id.toString())
+  //   })),
+  //   likes: post.likes.map((_id) => _id.toString()),
+  //   saved: post.saved.map((_id) => _id.toString()),
+  //   createdBy: {
+  //     name: post.createdBy.name,
+  //     username: post.createdBy.username,
+  //     profilePic: post.createdBy.profilePic
+  //   }
+  // }
   let comments = post.comments
-  console.log({ post })
+  // console.log({ post })
   console.log({ comment: comments[0] })
 
   console.log(postid)
@@ -196,7 +196,7 @@ const PostRoute = async ({ params }) => {
             </div>
           )}
         </div> */}
-        <h1>Hello</h1>
+
         <p className="flex p-5 items-center justify-center bg-yellow-400 rounded-xl text-xl font-bold">In Development</p>
       </div>
     </div>
