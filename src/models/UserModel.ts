@@ -48,5 +48,5 @@ const UserSchema = new Schema<UserI>({
   followings: [{ type: Types.ObjectId, ref: "User" }],
 });
 
-const User = models.User || model<UserI>("User", UserSchema);
-export default User as Model<UserI>;
+const User = (models.User as Model<UserI>) || model<UserI>("User", UserSchema);
+export default User;

@@ -1,4 +1,7 @@
 import mongoose, { connect, connections } from "mongoose"
+import "@/models/UserModel";
+import "@/models/PostModel";
+import "@/models/CommentModel";
 
 const ConnectDB = async () => {
 

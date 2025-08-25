@@ -31,6 +31,7 @@ const LikeaComment = ({comment}) => {
         <button className="text-gray-500 hover:text-blue-500 transition-colors text-sm font-medium">
           Reply
         </button>
+
       </div>
     </div>
   )

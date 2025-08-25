@@ -26,7 +26,8 @@ const commentSchema = new Schema<CommentI>({
   }]
 });
 
-const Comment = models.Comment || model<CommentI>("Comment", commentSchema);
+const Comment = (models.Comment as Model<CommentI>) ||
+  model<CommentI>("Comment", commentSchema);
 
-export default Comment as Model<CommentI>;
+export default Comment;
 
