@@ -15,7 +15,6 @@ const initialValue: actionResponse = {}
 const passwordSchema = z.string().min(6, "Password's too short, must be atleast 6 characters")
 
 export function SignupForm() {
-  // const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<any>({});
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
@@ -35,28 +34,6 @@ export function SignupForm() {
     });
   };
 
-  // const Submit = async (e) => {
-  //   const SignUpData = {
-  //     name: e.get("name"),
-  //     username: e.get("username"),
-  //     email: e.get("email"),
-  //     password: e.get("password"),
-  //   };
-
-  //   const response = await SignUp(SignUpData)
-  //   console.log({ response })
-  //   if (response.success) {
-  //     console.log("signed up");
-  //     setSuccess(true)
-  //     router.push("/feed")
-  //   } else {
-  //     console.log(response.userExistMessage)
-  //     setError({
-  //       ...error,
-  //       userExistMessage: response.userExistMessage,
-  //     });
-  //   }
-  // };
   return (
     <Card className="w-10/10 h-10/10 md:w-6/10 md:h-9/10 lg:w-1/3">
       <h1 className="text-center text-2xl mb-1">Sign up</h1>

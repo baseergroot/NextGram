@@ -5,8 +5,11 @@ import { FaComment } from "react-icons/fa";
 import LikeButton from "./LikeButton";
 import Link from "next/link";
 import SaveButton from "@/components/SaveButton"
+import loggedInUser from "@/lib/getLoggedInUser";
 
 export default async function Feed({ posts }) {
+  const decode = await loggedInUser()
+  const currentUser:string = decode.id.toString()
   return (
     <section className=" h-[100vh] w-full mb-10">
       <main className="bg-gray-100 h-full w-full overflow-auto">
@@ -33,7 +36,7 @@ export default async function Feed({ posts }) {
               <section className="h-3/20 flex flex-col justify-center px-2">
                 <h2 className="text-md">{post.title}</h2>
                 <div className="text-sm text-gray-500 flex gap-7">
-                  <LikeButton post={post} />
+                  <LikeButton post={post} currentUser={currentUser} />
                   <span className="flex gap-1 items-center text-xl">
                     <Link href={`/post/${post._id}`}>
                       <FaComment className="text-2xl" />

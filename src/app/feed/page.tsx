@@ -28,7 +28,7 @@ const Page = async () => {
     })).reverse()
     const decode: Decode = await loggedInUser()
     const user: UserI = await (User as any).findById(decode.id)
-    console.log(posts[0])
+    // console.log(posts[0])
     const profilePic = user.profilePic
     
     if (!posts) {
