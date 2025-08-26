@@ -17,13 +17,13 @@ export default async function Feed({ posts }) {
           posts.map((post) => (
             <div key={post._id} className="mx-2 p-2 bg-white rounded-xl shadow-md my-2 h-7/10 flex flex-col">
               {/* author information section */}
-              <section className=" h-3/20 flex items-center gap-5 px-2">
+              <Link href={`/user/${post.createdBy.username}`} className="cursor-pointer h-3/20 flex items-center gap-5 px-2">
                 <Image unoptimized src={post.createdBy.profilePic} alt="Post pic" width={10} height={10} className="rounded-full w-15 h-15 p-0.5 border-[1px] border-gray-200" />
                 <div className="">
                   <h2 className="text-lg font-semibold">{post.createdBy.name}</h2>
                   <p className="text-sm text-gray-500">@{post.createdBy.username}</p>
                 </div>
-              </section>
+              </Link>
 
               {/* post file section video or img */}
               <div className="h-7/10  border-[1px] border-gray-200 rounded-2xl overflow-hidden">
