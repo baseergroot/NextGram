@@ -28,7 +28,9 @@ export default async function Feed({ posts }) {
               {/* post file section video or img */}
               <div className="h-7/10  border-[1px] border-gray-200 rounded-2xl overflow-hidden">
                 {
-                  post.file.endsWith('.mp4') ? (<video controls src={post.file} className="h-full w-full bg-gray-100 object-contain"></video>) : (<Image unoptimized src={post.file} alt="Profile pic" width={10} height={10} className=" h-full w-full bg-gray-100 object-contain" />)
+                  post.file.endsWith('.mp4') ? (<video controls src={post.file} className="h-full w-full bg-gray-100 object-contain"></video>) : (<Link href={`/post/${post._id}`}>
+                  <Image unoptimized src={post.file} alt="Profile pic" width={10} height={10} className=" h-full w-full bg-gray-100 object-contain" />
+                  </Link>)
                 }
               </div>
 
