@@ -43,7 +43,7 @@ export default async function Feed({ posts }) {
                     </Link>
                     <span>{post.comments.length}</span>
                   </span>
-                  <SaveButton post={post} />
+                  <SaveButton post={post} currentUser={currentUser}/>
                 </div>
               </section>
             </div>
