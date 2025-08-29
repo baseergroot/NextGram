@@ -17,8 +17,9 @@ await ConnectDB()
 const PostRoute = async ({ params }) => {
   const { postid } = await params
   const decode = await loggedInUser()
+  const currentUser:string = decode.id.toString()
   console.log(models);
-  let post = await Post.findById(postid).populate({path: "createdBy", select: "name username profilePic"}).populate({
+  let post:any = await Post.findById(postid).populate({path: "createdBy", select: "name username profilePic"}).populate({
     path: "comments",
     select: "content createdBy likes",
     populate: {
@@ -39,7 +40,7 @@ const PostRoute = async ({ params }) => {
         profilePic: comment.createdBy.profilePic
       },
       likes: comment.likes.map((_id) => _id.toString())
-    })),
+    })).reverse(),
     likes: post.likes.map((_id) => _id.toString()),
     saved: post.saved.map((_id) => _id.toString()),
     createdBy: {
@@ -106,7 +107,7 @@ const PostRoute = async ({ params }) => {
             {/* Engagement Stats */}
             <div className="flex items-center justify-between py-4 border-t border-gray-50">
               <div className="flex items-center gap-6 ">
-                <LikeButton post={post} />
+                <LikeButton post={post} currentUser={currentUser} />
 
                 <div className="flex items-center gap-2 text-gray-600 hover:text-blue-500 transition-colors cursor-pointer">
                   <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,7 +117,7 @@ const PostRoute = async ({ params }) => {
                 </div>
 
 
-                <SaveButton post={post} />
+                <SaveButton post={post} currentUser={currentUser}/>
               </div>
             </div>
           </div>

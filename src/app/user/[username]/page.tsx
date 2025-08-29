@@ -28,7 +28,7 @@ export default async function UserPage({params}) {
     file: post.file
   }))
   const decode:Decode = await loggedInUser()
-  let following: boolean = user.followers.includes(decode.id)
+  let following: boolean = user.followers.includes(decode.id.toString())
   // console.log("Following status:", following)
   // console.log({user}, posts[0])
 

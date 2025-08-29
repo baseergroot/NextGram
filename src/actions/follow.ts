@@ -16,7 +16,7 @@ export async function FollowAction(userId: string) {
       console.log("cannot follow yourself")
       return { success: false, message: "cannot follow yourself" }
     }
-    if (user.followers.includes(decode.id)) {
+    if (user.followers.includes(decode.id.toString())) {
       user = await (User as any).findByIdAndUpdate(userId, { $pull: { followers: decode.id } }, { new: true })
       await (User as any).findByIdAndUpdate(decode.id, { $pull: { followings: userId } })
       // console.log("successfully unfollowed", user.followers.length)
