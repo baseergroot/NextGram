@@ -1,11 +1,11 @@
-import { SignupForm } from "@/components/SignUp"
+import { SignupForm } from "@/components/SignUp";
 
 const SignupPage = () => {
-    return (
-        <div className="flex flex-col items-center justify-center w-full h-[100svh]">
-            <SignupForm />
-        </div>
-    )
-}
+  return (
+    <div className="flex min-h-screen items-center justify-center px-4 py-12">
+      <SignupForm />
+    </div>
+  );
+};
 
-export default SignupPage
+export default SignupPage;

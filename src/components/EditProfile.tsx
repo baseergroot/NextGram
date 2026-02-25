@@ -1,105 +1,104 @@
-"use client"
-import { ProfileEdit } from '@/actions/profileEdit'
-import { UserI } from '@/types/UserType'
-import axios from 'axios'
-import { Label, TextInput } from 'flowbite-react'
-import { Button, styled, TextField } from "@mui/material";
-import { CloudUploadIcon } from 'lucide-react'
-import Image from 'next/image'
-import React, { useState } from 'react'
+"use client";
+
+import { ProfileEdit } from "@/actions/profileEdit";
+import { UserI } from "@/types/UserType";
+import axios from "axios";
+import Image from "next/image";
+import { useState } from "react";
 
 const EditForm = ({ userDetail }) => {
-  const [user, setUser] = useState<UserI>(userDetail)
+  const [user, setUser] = useState<UserI>(userDetail);
+  const [saving, setSaving] = useState(false);
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
-    if (file) {
-      const formdata = new FormData();
-      formdata.append("file", file);
-      formdata.append("upload_preset", "nextgram");
-      const clResponse = await axios.post(process.env.NEXT_PUBLIC_CLOUDNARY_IMAGE_URL, formdata)
-      setUser({ ...user, profilePic: clResponse.data.secure_url });
-      console.log("updated profile pic:", clResponse.data.secure_url);
-    }
+    if (!file) return;
+    const formdata = new FormData();
+    formdata.append("file", file);
+    formdata.append("upload_preset", "nextgram");
+    const clResponse = await axios.post(
+      process.env.NEXT_PUBLIC_CLOUDNARY_IMAGE_URL,
+      formdata
+    );
+    setUser({ ...user, profilePic: clResponse.data.secure_url });
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log({user})
+    setSaving(true);
     await ProfileEdit(user);
-    console.log("Updated User:", user);
+    setSaving(false);
   };
-  const VisuallyHiddenInput = styled("input")({
-    clip: "rect(0 0 0 0)",
-    clipPath: "inset(50%)",
-    height: 1,
-    overflow: "hidden",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    whiteSpace: "nowrap",
-    width: 1,
-  });
+
   return (
-    <div className='w-full lg:w-[50vw] max-w-md mx-auto bg-white rounded-lg'>
-      <h1 className='text-center pt-5 my-10 text-2xl'>Edit Profile</h1>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-1 py-10 my-5 px-5 shadow-2xl w-9/10 mx-auto rounded'>
-        <div className='flex items-center gap-2 mb-4'>
-          <div className="mb-2 flex flex-col items-center">
-            <Image src={user.profilePic} alt='Profile Pic' width={30} height={30} className='rounded-full object-cover w-20 h-20 border-2 border-gray-300' unoptimized/>
-          </div>
-          {/* <input
-            type="file"
-            id="profilePic"
-            onChange={handleFileChange}
-          /> */}
-          <Button
-            component="label"
-            role={undefined}
-            variant="contained"
-            tabIndex={-1}
-            startIcon={<CloudUploadIcon />}
+    <div className="mx-auto w-full max-w-2xl px-4 pb-24 pt-10">
+      <div className="rounded-3xl border border-border bg-white/90 p-8 shadow-sm">
+        <div className="mb-6">
+          <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
+            Profile settings
+          </p>
+          <h1 className="mt-3 text-2xl font-semibold text-foreground">Edit profile</h1>
+        </div>
 
-          >
-            Upload pic
-            <VisuallyHiddenInput
-              type="file"
-              id="profilePic"
-              onChange={handleFileChange}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <div className="flex flex-wrap items-center gap-5">
+            <div className="h-20 w-20 overflow-hidden rounded-full border border-border">
+              <Image
+                src={user.profilePic}
+                alt="Profile"
+                width={80}
+                height={80}
+                className="h-full w-full object-cover"
+                unoptimized
+              />
+            </div>
+            <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-border bg-white px-4 py-2 text-xs font-semibold text-foreground shadow-sm transition hover:shadow">
+              Upload new photo
+              <input type="file" className="hidden" onChange={handleFileChange} />
+            </label>
+          </div>
+
+          <div>
+            <label htmlFor="name" className="text-xs font-semibold uppercase tracking-wide">
+              Name
+            </label>
+            <input
+              id="name"
+              type="text"
+              placeholder="Name"
+              required
+              onChange={(e) => setUser({ ...user, name: e.target.value })}
+              value={user.name}
+              className="mt-2 w-full rounded-xl border border-border bg-white px-3 py-2 text-sm text-foreground shadow-sm transition focus:border-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/10"
             />
-          </Button>
-        </div>
-        <div>
-          <div className="mb-2 block">
-            <Label htmlFor="name">Name</Label>
           </div>
-          <TextInput
-            id="name"
-            type="text"
-            placeholder="Name"
-            required
-            onChange={e => setUser({ ...user, name: e.target.value })}
-            value={user.name}
-          />
-        </div>
-        <div></div>
-        <div>
-          <div className="mb-2 block">
-            <Label htmlFor="username">Username</Label>
-          </div>
-          <TextInput
-            id="username"
-            type="text"
-            placeholder="Username"
-            required
-            onChange={e => setUser({ ...user, username: e.target.value })}
-            value={user.username}
-          />
-        </div>
-        <div></div>
-        <Button variant="contained" type="submit" className='mt-3'>Update Profile</Button>
-      </form>
-    </div>
-  )
-}
 
-export default EditForm
+          <div>
+            <label htmlFor="username" className="text-xs font-semibold uppercase tracking-wide">
+              Username
+            </label>
+            <input
+              id="username"
+              type="text"
+              placeholder="Username"
+              required
+              onChange={(e) => setUser({ ...user, username: e.target.value })}
+              value={user.username}
+              className="mt-2 w-full rounded-xl border border-border bg-white px-3 py-2 text-sm text-foreground shadow-sm transition focus:border-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/10"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background shadow-sm transition hover:shadow-md disabled:opacity-70"
+            disabled={saving}
+          >
+            {saving ? "Saving..." : "Save changes"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default EditForm;

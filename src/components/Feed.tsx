@@ -1,57 +1,94 @@
-// /feed route, component
-
 import Image from "next/image";
 import { FaComment } from "react-icons/fa";
 import LikeButton from "./LikeButton";
 import Link from "next/link";
-import SaveButton from "@/components/SaveButton"
+import SaveButton from "@/components/SaveButton";
 import loggedInUser from "@/lib/getLoggedInUser";
 
 export default async function Feed({ posts }) {
-  const decode = await loggedInUser()
-  const currentUser:string = decode.id.toString()
+  const decode = await loggedInUser();
+  const currentUser: string = decode.id.toString();
+
   return (
-    <section className=" h-[100vh] w-full mb-10">
-      <main className="bg-gray-100 h-full w-full overflow-auto">
-        {
-          posts.map((post) => (
-            <div key={post._id} className="mx-2 p-2 bg-white rounded-xl shadow-md my-2 h-7/10 flex flex-col">
-              {/* author information section */}
-              <Link href={`/user/${post.createdBy.username}`} className="cursor-pointer h-3/20 flex items-center gap-5 px-2">
-                <Image unoptimized src={post.createdBy.profilePic} alt="Post pic" width={10} height={10} className="rounded-full w-15 h-15 p-0.5 border-[1px] border-gray-200" />
-                <div className="">
-                  <h2 className="text-lg font-semibold">{post.createdBy.name}</h2>
-                  <p className="text-sm text-gray-500">@{post.createdBy.username}</p>
+    <section className="flex-1 bg-[#f3f4f6]">
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 pb-24 pt-6">
+        {posts.map((post) => (
+          <article
+            key={post._id}
+            className="overflow-hidden rounded-3xl border border-border bg-white shadow-sm"
+          >
+            <header className="flex items-center justify-between px-5 py-4">
+              <Link
+                href={`/user/${post.createdBy.username}`}
+                className="flex items-center gap-3"
+              >
+                <Image
+                  unoptimized
+                  src={post.createdBy.profilePic}
+                  alt="Profile"
+                  width={40}
+                  height={40}
+                  className="h-10 w-10 rounded-full border border-border object-cover"
+                />
+                <div>
+                  <p className="text-sm font-semibold text-foreground">
+                    {post.createdBy.name}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    @{post.createdBy.username}
+                  </p>
                 </div>
               </Link>
+              <Link
+                href={`/post/${post._id}`}
+                className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
+              >
+                View
+              </Link>
+            </header>
 
-              {/* post file section video or img */}
-              <div className="h-7/10  border-[1px] border-gray-200 rounded-2xl overflow-hidden">
-                {
-                  post.file.endsWith('.mp4') ? (<video controls src={post.file} className="h-full w-full bg-gray-100 object-contain"></video>) : (<Link href={`/post/${post._id}`}>
-                  <Image unoptimized src={post.file} alt="Profile pic" width={10} height={10} className=" h-full w-full bg-gray-100 object-contain" />
-                  </Link>)
-                }
+            <div className="border-y border-border bg-[#e9ecef]">
+              <div className="relative w-full overflow-hidden bg-[#e9ecef]">
+                {post.file.endsWith(".mp4") ? (
+                  <video
+                    controls
+                    src={post.file}
+                    className="aspect-[1/1] w-full max-h-[520px] object-contain md:aspect-[4/5]"
+                  />
+                ) : (
+                  <Link href={`/post/${post._id}`}>
+                    <Image
+                      unoptimized
+                      src={post.file}
+                      alt="Post"
+                      width={900}
+                      height={900}
+                      className="aspect-[1/1] w-full max-h-[520px] object-contain md:aspect-[4/5]"
+                    />
+                  </Link>
+                )}
               </div>
-
-              {/* post info section. post title, likes, comments, saves */}
-              <section className="h-3/20 flex flex-col justify-center px-2">
-                <h2 className="text-md">{post.title}</h2>
-                <div className="text-sm text-gray-500 flex gap-7">
-                  <LikeButton post={post} currentUser={currentUser} />
-                  <span className="flex gap-1 items-center text-xl">
-                    <Link href={`/post/${post._id}`}>
-                      <FaComment className="text-2xl" />
-                    </Link>
-                    <span>{post.comments.length}</span>
-                  </span>
-                  <SaveButton post={post} currentUser={currentUser}/>
-                </div>
-              </section>
             </div>
-          ))
-        }
-      </main>
+
+            <div className="px-5 py-4">
+              <p className="text-sm text-foreground md:text-base">{post.title}</p>
+              <div className="mt-4 flex items-center justify-between">
+                <div className="flex items-center gap-6">
+                  <LikeButton post={post} currentUser={currentUser} />
+                  <Link
+                    href={`/post/${post._id}`}
+                    className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition hover:text-foreground"
+                  >
+                    <FaComment className="h-4 w-4" />
+                    <span className="tabular-nums">{post.comments.length}</span>
+                  </Link>
+                </div>
+                <SaveButton post={post} currentUser={currentUser} />
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
     </section>
-  )
+  );
 }

@@ -1,15 +1,17 @@
-// import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Fraunces, Sora } from "next/font/google";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata = {
   title: "NextGram",
@@ -19,12 +21,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className={`${sora.variable} ${fraunces.variable} antialiased`}>
         {children}
       </body>
     </html>
   );
 }
-
-
-// className={`${geistSans.variable} ${geistMono.variable} antialiased`}
