@@ -1,5 +1,5 @@
 "use client";
-import { CreatePost } from "@/actions/createPost";
+import { CreatePost } from "@/actions/post/createPost";
 import BottomNavbar from "@/components/BottomNavbar";
 import axios from "axios";
 import { Button, FileInput, Label, Textarea } from "flowbite-react";

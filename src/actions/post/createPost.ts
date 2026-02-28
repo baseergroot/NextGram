@@ -3,6 +3,7 @@ import ConnectDB from "@/lib/ConnectDb"
 import Post from "@/models/PostModel"
 import User from "@/models/UserModel"
 import loggedInUser from "@/lib/getLoggedInUser"
+import redis from "@/lib/redis/client"
 
 // connect database
   await ConnectDB()
@@ -20,5 +21,7 @@ export async function CreatePost(data: {title: string, file: string}) {
   const post = await (Post as any).create({title, file, createdBy: decode.id})
   console.log(post)
   await (User as any).findByIdAndUpdate(decode.id, {$push: {posts: post._id}})
+
+  await redis.del("posts")
   return {success: true}
 }

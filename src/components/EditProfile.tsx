@@ -1,5 +1,5 @@
 "use client"
-import { ProfileEdit } from '@/actions/profileEdit'
+import { ProfileEdit } from '@/actions/profile/profileEdit'
 import { UserI } from '@/types/UserType'
 import axios from 'axios'
 import { Label, TextInput } from 'flowbite-react'

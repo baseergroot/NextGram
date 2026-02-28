@@ -1,5 +1,5 @@
 "use client";
-import { SignUp } from "@/actions/signup";
+import { SignUp } from "@/actions/authentication/signup";
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Link from "next/link";
 import { useActionState, useState } from "react";

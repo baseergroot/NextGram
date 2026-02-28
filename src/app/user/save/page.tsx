@@ -2,7 +2,7 @@
 import axios from 'axios';
 import React, { useState, useEffect, Fragment } from 'react';
 import BottomNavbar from "@/components/BottomNavbar"
-import { Saved } from '@/actions/savedPosts';
+import { Saved } from '@/actions/post/savedPosts';
 import Image from 'next/image';
 
 export default function SavedPostsPage() {

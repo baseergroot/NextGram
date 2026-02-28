@@ -1,6 +1,6 @@
 "use client"
 
-import { LikeAction } from '@/actions/likePost'
+import { LikeAction } from '@/actions/like/likePost'
 import React, { useActionState, useEffect, useState, useTransition } from 'react'
 import { IoMdHeart } from 'react-icons/io'
 

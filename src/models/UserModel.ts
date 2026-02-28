@@ -1,9 +1,22 @@
-import ConnectDB from "@/lib/ConnectDb";
 import { UserI } from "@/types/UserType";
 import { Model, model, models, Schema, Types } from "mongoose";
 
+// interface UserI {
+//   name: string
+//   username: string
+//   email: string
+//   password: string
+//   profilePic: string
+//   bio: String,
+//   posts: Types.ObjectId[]
+//   saved: Types.ObjectId[]
+//   followers: Types.ObjectId[]
+//   followedByCurrentUser: boolean
+//   followings: Types.ObjectId[]
+// }
+
 // await ConnectDB()
-console.log("UserModel loaded");  
+console.log("UserModel loaded");
 const UserSchema = new Schema<UserI>({
   name: {
     type: String,
@@ -38,7 +51,7 @@ const UserSchema = new Schema<UserI>({
       type: Types.ObjectId,
       ref: "Post"
     }
-    
+
   ],
   followers: [{ type: Types.ObjectId, ref: "User" }],
   followedByCurrentUser: {

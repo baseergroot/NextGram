@@ -1,6 +1,6 @@
 "use client"
 
-import { Save } from "@/actions/savePost";
+import { Save } from "@/actions/post/savePost";
 import { useState } from "react";
 
 const SaveButton = ({ post, currentUser }) => {

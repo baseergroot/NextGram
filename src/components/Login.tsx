@@ -2,7 +2,7 @@
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Link from "next/link";
 import { useActionState, useState } from "react";
-import { Login } from "@/actions/login"
+import { Login } from "@/actions/authentication/login"
 
 interface LoginState {
   notExist: string | null;

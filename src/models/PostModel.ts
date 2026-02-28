@@ -1,4 +1,3 @@
-import ConnectDB from "@/lib/ConnectDb";
 import { PostI } from "@/types/PostType";
 import { Model, model, models, Schema, Types } from  "mongoose";
 

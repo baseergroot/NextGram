@@ -12,3 +12,13 @@ export interface PostI {
   saved?: UserI[] | string[];
 }
 
+
+export interface IPost {
+  _id?: string;
+  title?: string;
+  file?: string;
+  createdBy?: UserI;
+  likes?: string[];
+  comments?:string[];
+  saved?: string[];
+}

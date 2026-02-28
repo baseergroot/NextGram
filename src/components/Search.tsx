@@ -1,5 +1,5 @@
 "use client";
-import { Search } from "@/actions/search";
+import { Search } from "@/actions/search/search";
 import { UserI } from "@/types/UserType";
 import { TextInput } from "flowbite-react";
 import Image from "next/image";

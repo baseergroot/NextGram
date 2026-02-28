@@ -1,6 +1,6 @@
 "use client"
 
-import { LikeAComment } from '@/actions/likeAComment'
+import { LikeAComment } from '@/actions/comment/likeAComment'
 import React, { useState } from 'react'
 
 const LikeaComment = ({comment}) => {

@@ -7,7 +7,7 @@ import { UserI } from '@/types/UserType';
 import { useRouter } from 'next/navigation';
 import BottomNavbar from "@/components/BottomNavbar"
 import { PostI } from '@/types/PostType';
-import { FollowAction } from '@/actions/follow';
+import { FollowAction } from '@/actions/profile/follow';
 
 export default function UserComponent({ userDetail, posts, following }) {
   console.log("followers",userDetail.followers,  following)

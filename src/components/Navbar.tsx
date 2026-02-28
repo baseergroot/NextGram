@@ -1,6 +1,6 @@
 "use client"
-import { isLoggedinAction } from "@/actions/isLoggedin";
-import { Logout } from "@/actions/logout";
+import { isLoggedinAction } from "@/actions/authentication/isLoggedin";
+import { Logout } from "@/actions/authentication/logout";
 import loggedInUser from "@/lib/getLoggedInUser";
 import axios from "axios";
 import {
