@@ -10,6 +10,7 @@ export default async function getParamPost(postid: string): Promise<ParamPostI> 
   const cachePost: ParamPostI = await redis.get("post")
 
   if (cachePost) {
+    console.log("cached page server")
     return cachePost
   }
 
