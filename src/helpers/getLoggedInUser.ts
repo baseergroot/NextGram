@@ -3,11 +3,12 @@ import { verify } from "jsonwebtoken"
 import { ObjectId } from "mongoose"
 
 export interface Decode {
-    name?: string,
-    username?: string,
-    email?: string | null,
-    id?: string | ObjectId,
-    success?: boolean,
+    name?: string
+    username?: string
+    email?: string | null
+    profilePic?: string
+    id?: string | ObjectId
+    success?: boolean
     message?: string
 }
 

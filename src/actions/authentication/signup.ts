@@ -49,7 +49,7 @@ export async function SignUp(intitialData: any, formData: FormData) {
     }
   }
   const user = await (User as any).create({ name, username, password: hashedPassword })
-  const token = sign({ name, username, id: user?._id }, process.env.JWT_SECRET)
+  const token = sign({ name, username, id: user?._id, profilePic: "https://res.cloudinary.com/dyay3p5th/image/upload/v1749750096/rt9qjllvlinzkffpsbpr.png" }, process.env.JWT_SECRET)
   cookie.set("token", token, {
     httpOnly: true
   })
