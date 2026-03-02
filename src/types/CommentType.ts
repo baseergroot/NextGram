@@ -10,3 +10,14 @@ export interface CommentI {
   likes?: UserI[] | string[] | Types.ObjectId[],
   disLikes?: UserI[] | string[] | Types.ObjectId[]
 }
+
+export interface IComment {
+  _id: string
+  content: string
+  createdBy: {
+    name: string
+    username: string
+    profilePic: string
+  },
+  likes: string[]
+}

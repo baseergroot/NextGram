@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { CommentI } from "./CommentType";
+import { CommentI, IComment } from "./CommentType";
 import { UserI } from "./UserType";
 
 export interface PostI {
@@ -22,3 +22,13 @@ export interface IPost {
   comments:string[];
   saved: string[];
 }
+
+export interface ParamPostI  {
+    _id: string
+    title: string
+    file: string
+    comments: IComment[] | string[]
+    likes: string[]
+    saved: string[]
+    createdBy: UserI
+  }

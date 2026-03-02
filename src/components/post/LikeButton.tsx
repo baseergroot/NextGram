@@ -2,7 +2,7 @@
 
 import { LikeAction } from '@/actions/like/likePost'
 import { LikeActionResponseI } from '@/types/likePostResponse'
-import { IPost } from '@/types/PostType'
+import { IPost, ParamPostI } from '@/types/PostType'
 import { useActionState, useEffect, useState, useTransition } from 'react'
 import { IoMdHeart } from 'react-icons/io'
 
@@ -11,7 +11,7 @@ const initialState: LikeActionResponseI = {
 }
 
 const LikeButton = ({ post, currentUser }: {
-  post: IPost,
+  post: ParamPostI,
   currentUser: string | undefined
 }) => {
   // console.log({ currentUser })

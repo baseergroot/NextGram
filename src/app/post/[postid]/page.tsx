@@ -12,48 +12,18 @@ import { Button } from "flowbite-react"
 import { revalidatePath } from "next/cache"
 import Image from "next/image"
 import { models } from "mongoose"
+import getParamPost from "@/helpers/getParamPost"
 
-await ConnectDB()
+
 const PostRoute = async ({ params }) => {
   const { postid } = await params
   const decode = await loggedInUser()
   const currentUser: string = decode.id.toString()
-  console.log(models);
-  let post: any = await Post.findById(postid).populate({ path: "createdBy", select: "name username profilePic" }).populate({
-    path: "comments",
-    select: "content createdBy likes",
-    populate: {
-      path: "createdBy",
-      select: "name username profilePic"
-    }
-  })
-  post = {
-    _id: post._id.toString(),
-    title: post.title,
-    file: post.file,
-    comments: post.comments.map((comment) => ({
-      _id: comment._id.toString(),
-      content: comment.content,
-      createdBy: {
-        name: comment.createdBy.name,
-        username: comment.createdBy.username,
-        profilePic: comment.createdBy.profilePic
-      },
-      likes: comment.likes.map((_id) => _id.toString())
-    })).reverse(),
-    likes: post.likes.map((_id) => _id.toString()),
-    saved: post.saved.map((_id) => _id.toString()),
-    createdBy: {
-      name: post.createdBy.name,
-      username: post.createdBy.username,
-      profilePic: post.createdBy.profilePic
-    }
-  }
+  const post = await getParamPost(postid)
   let comments = post.comments
-  // console.log({ post })
+  // console.log({ post }) 
   console.log({ comment: comments[0] })
 
-  console.log(postid)
   return (
     <div className="min-h-screen bg-gray-50/30">
       <div className="max-w-2xl mx-auto px-4 py-8">

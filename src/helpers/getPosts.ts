@@ -5,19 +5,20 @@ import { IPost } from "@/types/PostType";
 
 
 export default async function getposts() {
-  const cachedData: IPost[] | null = await redis.get("posts");
+  const cachedPosts: IPost[] | null = await redis.get("posts");
 
-  if (cachedData) {
+  if (cachedPosts) {
     console.log("cached data server")
-    return cachedData
+    return cachedPosts
   }
 
   console.log("no cached data found")
 
   await ConnectDB()
 
-  let posts: IPost[] = await (Post as any).find().populate("createdBy", "name username profilePic")
-  posts = posts.map((post: IPost) => ({
+  let postsDoc = await Post.find().populate("createdBy", "name username profilePic")
+
+  const posts: IPost[] = postsDoc.map((post) => ({
     _id: post._id.toString(),
     title: post.title,
     file: post.file,
