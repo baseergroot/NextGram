@@ -21,7 +21,7 @@ await ConnectDB()
 export async function SignUp(intitialData: any, formData: FormData) {
   const { name, username, password } = {
     name: formData.get("name")?.toString(),
-    username: formData.get("username")?.toString(),
+    username: formData.get("username")?.toString().trim().replace(/\s+/g, "_"),
     password: formData.get("password")?.toString(),
   }
   const validateUser = SignUpSchema.safeParse({

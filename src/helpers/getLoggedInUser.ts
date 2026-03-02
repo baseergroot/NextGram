@@ -25,6 +25,7 @@ const loggedInUser = async ():Promise<Decode> => {
     }
 
     const decode = verify(token.value, process.env.JWT_SECRET) as  Decode
+    decode.success = true
     console.log({decode})
 
     return decode

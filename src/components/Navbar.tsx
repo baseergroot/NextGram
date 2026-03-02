@@ -20,12 +20,13 @@ import { useEffect, useState } from "react";
 const NavbarComponent = ({ profilePic, decode }: {
   profilePic: string,
   decode: Decode
-}) => {
+}) => { 
   const [isLoggedin, setIsloggedin] = useState<boolean>(false)
   const [user, setUser] = useState<{ name: string, username: string } | null>()
   const router = useRouter()
   useEffect(() => {
     async function Fetch() {
+      console.log("nav: ", decode.success)
       decode.success ? setIsloggedin(true) : setIsloggedin(false)
       setUser({ name: decode.name, username: decode.username })
     }
