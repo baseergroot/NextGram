@@ -6,12 +6,14 @@ import User from "@/models/UserModel";
 import { UserI } from "@/types/UserType";
 import Feed from "@/components/Feed";
 import getposts from "@/helpers/getPosts";
+import ConnectDB from "@/lib/ConnectDb";
 
 const Page = async () => {
 
 	const posts = await getposts()
 	// const decode: Decode = await loggedInUser()
 	const decode = await loggedInUser()
+	await ConnectDB()
 	const user: UserI = await (User as any).findById(decode.id)
 	// console.log(posts[0])
 	const profilePic: string | undefined = user.profilePic
