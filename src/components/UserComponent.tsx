@@ -9,7 +9,7 @@ import BottomNavbar from "@/components/BottomNavbar"
 import { PostI } from '@/types/PostType';
 import { FollowAction } from '@/actions/profile/follow';
 
-export default function UserComponent({ userDetail, posts, following }) {
+export default function UserComponent({ userDetail, posts, following, decode }) {
   console.log("followers",userDetail.followers,  following)
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<string>('posts');
@@ -37,7 +37,7 @@ export default function UserComponent({ userDetail, posts, following }) {
   return (
     <div className="max-w-sm mx-auto bg-white min-h-screen border border-gray-200 relative">
       {/* Header */}
-      <NavbarComponent profilePic={user?.profilePic} />
+      <NavbarComponent profilePic={user?.profilePic} decode={decode} />
 
       {/* Profile Section */}
       <section className="px-5 py-8 text-center border-b border-gray-100">

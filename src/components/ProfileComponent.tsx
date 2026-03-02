@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import BottomNavbar from "@/components/BottomNavbar"
 import { PostI } from '@/types/PostType';
 
-export default function ProfileComponent({ response }) {
+export default function ProfileComponent({ response, decode }) {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<string>('posts');
   const [user, setUser] = useState<UserI>()
@@ -33,7 +33,7 @@ export default function ProfileComponent({ response }) {
   return (
     <div className="max-w-sm mx-auto bg-white min-h-screen border border-gray-200 relative">
       {/* Header */}
-      <NavbarComponent profilePic={user?.profilePic} />
+      <NavbarComponent profilePic={user?.profilePic} decode={decode} />
       <Suspense>
         {/* Profile Section */}
       <section className="px-5 py-8 text-center border-b border-gray-100">
@@ -97,15 +97,15 @@ export default function ProfileComponent({ response }) {
 
       {/* Content Grid */}
       <div className="grid grid-cols-2 gap-2 p-2 bg-gray-50 mb-15">
-        {!user ? "no post to see" : user.posts?.map((item: PostI, index) => (
+        {!user ? "no post to see" : user.posts?.map((post: PostI) => (
           <button
-            key={index}
+            key={post._id.toString()}
             className="aspect-square bg-gray-200 rounded flex items-center justify-center text-4xl text-gray-600 font-bold cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-gray-300 "
-            onClick={() => router.push(`post/${item._id}`)}
+            onClick={() => router.push(`post/${post._id}`)}
           >
             {
-              item.file.endsWith(".mp4") ? <video controls src={item.file} className=' h-full object-contain w-full rounded'></video> :
-              <Image src={item.file} alt='post' width={100} height={100} className=' h-full object-contain w-full rounded'></Image>}
+              post.file.endsWith(".mp4") ? <video controls src={post.file} className=' h-full object-contain w-full rounded'></video> :
+              <Image src={post.file} alt='post' width={100} height={100} className=' h-full object-contain w-full rounded'></Image>}
           </button>
         ))}
       </div>

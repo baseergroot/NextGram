@@ -3,12 +3,12 @@
 import { Save } from "@/actions/post/savePost";
 import { useState } from "react";
 
-const SaveButton = ({ post, currentUser }) => {
+const SaveButton = ({ post, currentUser, decode }) => {
   const [savedBy, setSavedBy] = useState(post.saved.length)
   const [savedByCurrentUser, setSavedByCurrentUser] = useState<boolean>(post.saved.includes(currentUser))
 
   const saveHandler = async () => {
-    const response = await Save(post._id)
+    const response = await Save(post._id, decode)
     // response?.success ? setSavedBy(response.savedByLength) : console.log("something went wrong at save button")
     if (response?.success) {
       setSavedBy(response.savedByLength)
@@ -17,7 +17,6 @@ const SaveButton = ({ post, currentUser }) => {
 
   }
   
-
   return (
     <button className="flex gap-1 items-center text-xl" onClick={saveHandler}>
       <svg className="w-7 h-7" fill={savedByCurrentUser ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">

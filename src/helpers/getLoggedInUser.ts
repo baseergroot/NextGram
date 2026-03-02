@@ -1,4 +1,3 @@
-"use server"
 import { cookies } from "next/headers"
 import { verify } from "jsonwebtoken"
 import { ObjectId } from "mongoose"

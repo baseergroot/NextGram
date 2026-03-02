@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose"; // jwt is not working in edge run time
 
-export async function middleware(request: NextRequest) {
+export default async function middleware(request: NextRequest) {
   const token:string = request.cookies.get("token")?.value
   const currentPathName:string = request.nextUrl.pathname
   const authRoutes:string[] = ["/login", "/signup"]

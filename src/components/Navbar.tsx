@@ -1,8 +1,6 @@
 "use client"
-import { isLoggedinAction } from "@/actions/authentication/isLoggedin";
 import { Logout } from "@/actions/authentication/logout";
-import loggedInUser from "@/lib/getLoggedInUser";
-import axios from "axios";
+import { Decode } from "@/helpers/getLoggedInUser";
 import {
   Avatar,
   Dropdown,
@@ -19,20 +17,20 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const NavbarComponent = ({ profilePic }) => {
+const NavbarComponent = ({ profilePic, decode }: {
+  profilePic: string,
+  decode: Decode
+}) => {
   const [isLoggedin, setIsloggedin] = useState<boolean>(false)
-  const [user, setUser] = useState<{name: string, username: string} | null>()
+  const [user, setUser] = useState<{ name: string, username: string } | null>()
   const router = useRouter()
   useEffect(() => {
     async function Fetch() {
-      const response:boolean = await isLoggedinAction()
-      console.log( response )
-      response ? setIsloggedin(true) : setIsloggedin(false)
-      const decode = await loggedInUser()
-      setUser({name: decode.name, username: decode.username})
+      decode.success ? setIsloggedin(true) : setIsloggedin(false)
+      setUser({ name: decode.name, username: decode.username })
     }
     Fetch()
-  },[])
+  }, [])
   return (
     <Navbar rounded fluid className="px-5 shadow sticky top-0 z-50">
       <NavbarBrand href="/logo.svg">
@@ -56,20 +54,20 @@ const NavbarComponent = ({ profilePic }) => {
           <DropdownItem>Settings</DropdownItem>
           <DropdownDivider />
           {
-          isLoggedin ? 
-          <DropdownItem onClick={ async () => {
-            const response = await Logout()
-              if (response)  {
-                setIsloggedin(false)
-                router.push("/")
-              }
-          }}>
-            Sign out</DropdownItem> : 
-            <DropdownItem onClick={() => router.push("/login")}>
-            Sign in</DropdownItem>
+            isLoggedin ?
+              <DropdownItem onClick={async () => {
+                const response = await Logout()
+                if (response) {
+                  setIsloggedin(false)
+                  router.push("/")
+                }
+              }}>
+                Sign out</DropdownItem> :
+              <DropdownItem onClick={() => router.push("/login")}>
+                Sign in</DropdownItem>
           }
-          
-          
+
+
         </Dropdown>
         {/* <NavbarToggle className="hidden"/> */}
       </div>
@@ -78,7 +76,7 @@ const NavbarComponent = ({ profilePic }) => {
         <NavbarLink href="/feed">
           Feed
         </NavbarLink>
-        
+
         <NavbarLink href="/user/profile">Profile</NavbarLink>
         <NavbarLink href="/post/search">Search</NavbarLink>
         <NavbarLink href="/user/saved">Saved</NavbarLink>

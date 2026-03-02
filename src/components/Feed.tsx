@@ -1,15 +1,14 @@
 // /feed route, component
-
 import Image from "next/image";
 import { FaComment } from "react-icons/fa";
 import LikeButton from "./LikeButton";
 import Link from "next/link";
 import SaveButton from "@/components/SaveButton"
-import loggedInUser from "@/lib/getLoggedInUser";
+import { FeedProps } from "@/types/feedTypes";
 
-export default async function Feed({ posts }) {
-  const decode = await loggedInUser()
-  const currentUser:string = decode.id.toString()
+export default async function Feed({ posts, decode }: FeedProps) {
+  
+  const currentUser: string |  undefined = decode?.id?.toString()
   return (
     <section className=" h-[100vh] w-full mb-10">
       <main className="bg-gray-100 h-full w-full overflow-auto">
@@ -18,7 +17,7 @@ export default async function Feed({ posts }) {
             <div key={post._id} className="mx-2 p-2 bg-white rounded-xl shadow-md my-2 h-7/10 flex flex-col">
               {/* author information section */}
               <Link href={`/user/${post.createdBy.username}`} className="cursor-pointer h-3/20 flex items-center gap-5 px-2">
-                <Image unoptimized src={post.createdBy.profilePic} alt="Post pic" width={10} height={10} className="rounded-full w-15 h-15 p-0.5 border-[1px] border-gray-200" />
+                <Image unoptimized src={post.createdBy.profilePic || "defaultProfile.png"} alt="Post pic" width={10} height={10} className="rounded-full w-15 h-15 p-0.5 border-[1px] border-gray-200" />
                 <div className="">
                   <h2 className="text-lg font-semibold">{post.createdBy.name}</h2>
                   <p className="text-sm text-gray-500">@{post.createdBy.username}</p>
@@ -29,7 +28,7 @@ export default async function Feed({ posts }) {
               <div className="h-7/10  border-[1px] border-gray-200 rounded-2xl overflow-hidden">
                 {
                   post.file.endsWith('.mp4') ? (<video controls src={post.file} className="h-full w-full bg-gray-100 object-contain"></video>) : (<Link href={`/post/${post._id}`}>
-                  <Image unoptimized src={post.file} alt="Profile pic" width={10} height={10} className=" h-full w-full bg-gray-100 object-contain" />
+                    <Image unoptimized src={post.file} alt="Profile pic" width={10} height={10} className=" h-full w-full bg-gray-100 object-contain" />
                   </Link>)
                 }
               </div>
@@ -45,7 +44,7 @@ export default async function Feed({ posts }) {
                     </Link>
                     <span>{post.comments.length}</span>
                   </span>
-                  <SaveButton post={post} currentUser={currentUser}/>
+                  <SaveButton post={post} currentUser={currentUser} decode={decode} />
                 </div>
               </section>
             </div>

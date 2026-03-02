@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { PostI } from "./PostType";
+import { IPost, PostI } from "./PostType";
 
 export interface UserI {
   _id?: Types.ObjectId | string,
@@ -9,9 +9,24 @@ export interface UserI {
   password?: string,
   profilePic?: string,
   bio?: string | null,
-  posts?: PostI[] | string[],
-  saved?: PostI[] | string[],
-  followers?: UserI[] | string[],
+  posts?: PostI[],
+  saved?: PostI[],
+  followers?: UserI[],
   followedByCurrentUser?: boolean,
-  followings?: UserI[] | string[],
+  followings?: UserI[]
+}
+
+export interface IUser {
+  _id?: string,
+  name?: string,
+  username?: string,
+  email?: string,
+  password?: string,
+  profilePic?: string,
+  bio?: string | null,
+  posts?: IPost[],
+  saved?: IPost[],
+  followers?: string[],
+  followedByCurrentUser?: boolean,
+  followings?: string[]
 }

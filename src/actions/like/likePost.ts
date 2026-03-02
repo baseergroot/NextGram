@@ -1,28 +1,34 @@
 "use server"
 import ConnectDB from "@/lib/ConnectDb"
-import loggedInUser from "@/lib/getLoggedInUser"
+import loggedInUser from "@/helpers/getLoggedInUser"
 import Post from "@/models/PostModel"
-import { PostI } from "@/types/PostType"
-import { Types } from "mongoose"
+import { IPost, PostI } from "@/types/PostType"
+import { ObjectId, Types } from "mongoose"
+import { LikeActionResponseI } from "@/types/likePostResponse"
 
 
-await ConnectDB()
-export async function LikeAction(initilaState:  any, postId: string):
-  Promise<{ success: boolean, message: string, updatedPost?: { _id: string, likes: string[] } }> 
-  {
+export async function LikeAction(initilaState: any, postId: string):
+  Promise<LikeActionResponseI> {
   // console.log("postid:", postId)
   const decode = await loggedInUser()
 
+  await ConnectDB()
   const post = await (Post as any).findById(postId)
   if (post.likes.includes(decode.id)) {
-    // console.log("already Liked")
+    console.log("already Liked")
     const updatedPost: PostI = await (Post as any).findByIdAndUpdate(postId, { $pull: { likes: decode.id } }, { new: true })
+
     return {
       success: true,
       message: "unliked",
       updatedPost: {
         _id: updatedPost._id.toString(),
-        likes: updatedPost.likes.map((like: Types.ObjectId) => like.toString())
+        likes: updatedPost.likes.map(
+          (like: object) => {
+            // console.log("tyoes if like id", typeof like)
+            return like.toString()
+          }
+        )
       }
     }
   }
