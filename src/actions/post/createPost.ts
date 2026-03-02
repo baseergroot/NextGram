@@ -1,5 +1,5 @@
 "use server"
-import ConnectDB from "@/lib/ConnectDb"
+import ConnectDB from "@/lib/database/ConnectDb"
 import Post from "@/models/PostModel"
 import User from "@/models/UserModel"
 import loggedInUser from "@/helpers/getLoggedInUser"

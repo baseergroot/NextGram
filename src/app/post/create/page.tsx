@@ -1,6 +1,6 @@
 "use client";
 import { CreatePost } from "@/actions/post/createPost";
-import BottomNavbar from "@/components/BottomNavbar";
+import BottomNavbar from "@/components/share/BottomNavbar";
 import axios from "axios";
 import { Button, FileInput, Label, Textarea } from "flowbite-react";
 import { useRouter } from "next/navigation";
@@ -15,19 +15,19 @@ export default function Create() {
     formData.append("file", form.get("file"));
     formData.append("upload_preset", "nextgram");
 
-      const data: { title: string, file: string } = {
-        title: form.get("title") as string,
-        file
-      }
+    const data: { title: string, file: string } = {
+      title: form.get("title") as string,
+      file
+    }
 
-      const response: { success: boolean } = await CreatePost(data)
-      if (!response.success) {
-        console.log("something went wrong")
-        return
-      }
-      console.log({ response })
-      setSuccess(true)
-      router.push("/user/profile")
+    const response: { success: boolean } = await CreatePost(data)
+    if (!response.success) {
+      console.log("something went wrong")
+      return
+    }
+    console.log({ response })
+    setSuccess(true)
+    router.push("/user/profile")
 
   };
   return (
@@ -49,23 +49,23 @@ export default function Create() {
               <span className="px-4 py-1 bg-gray-200 rounded mt-3">Upload</span>
             </div>
 
-            <FileInput aria-required id="dropzone-file" className="hidden" name="file" required onChange={ async e => {
+            <FileInput aria-required id="dropzone-file" className="hidden" name="file" required onChange={async e => {
               const formData = new FormData();
               formData.append("file", e.target.files[0]);
               formData.append("upload_preset", "nextgram");
               console.log("file type", e.target.files[0].type);
-              const cloudnaryUrl: string = e.target.files[0].type.startsWith("image/") ? process.env.NEXT_PUBLIC_CLOUDNARY_IMAGE_URL : 
+              const cloudnaryUrl: string = e.target.files[0].type.startsWith("image/") ? process.env.NEXT_PUBLIC_CLOUDNARY_IMAGE_URL :
                 e.target.files[0].type.startsWith("video/") ? process.env.NEXT_PUBLIC_CLOUDNARY_VIDEO_URL : null
               console.log("cloudnary url", cloudnaryUrl);
               if (cloudnaryUrl) {
                 axios.post(
-                cloudnaryUrl,
-                formData
-              ).then(res => {
-                setFile(res.data.secure_url)
-                console.log("file uploaded successfully", res.data.secure_url);
-              })
-                .catch(err => console.log("error agaya lamandu, ziyada cool ban rahe the na sub kuch tek tha:", err.message))
+                  cloudnaryUrl,
+                  formData
+                ).then(res => {
+                  setFile(res.data.secure_url)
+                  console.log("file uploaded successfully", res.data.secure_url);
+                })
+                  .catch(err => console.log("error agaya lamandu, ziyada cool ban rahe the na sub kuch tek tha:", err.message))
               }
               else console.log("cloudnary url not set, check your environment variables");
             }} />

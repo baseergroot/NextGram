@@ -1,4 +1,4 @@
-import ConnectDB from "@/lib/ConnectDb";
+import ConnectDB from "@/lib/database/ConnectDb";
 import loggedInUser, { Decode } from "@/helpers/getLoggedInUser";
 import Comment from "@/models/CommentModel";
 import Post from "@/models/PostModel";

@@ -1,44 +1,48 @@
 "use client"
 
-import NavbarComponent from '@/components/Navbar';
-import React, { Suspense, useEffect, useState } from 'react';
+import NavbarComponent from '@/components/share/Navbar';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { UserI } from '@/types/UserType';
 import { useRouter } from 'next/navigation';
-import BottomNavbar from "@/components/BottomNavbar"
+import BottomNavbar from "@/components/share/BottomNavbar"
 import { PostI } from '@/types/PostType';
+import { FollowAction } from '@/actions/profile/follow';
 
-export default function ProfileComponent({ response, decode }) {
+export default function UserComponent({ userDetail, posts, following, decode }) {
+  console.log("followers", userDetail.followers, following)
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<string>('posts');
   const [user, setUser] = useState<UserI>()
+  const [followers, setFollowers] = useState<number>(userDetail?.followers.length)
+  const [isFollowing, setIsFollowing] = useState<boolean>(following)
 
-  useEffect(() => {
-    console.log({response})
-    // response ? setUser(response) : console.log("something went wrong")
-    try {
-      setUser(response)
-    } catch (error) {
-      console.log("error something went wrong", error.message)
-    }
-  }
-  , [])
+  useEffect(() => userDetail ? setUser(userDetail) : console.log("something went wrong")
+    , [])
 
   const stats: { number: number; label: string }[] = [
-    { number: user?.posts.length, label: 'Posts' },
-    { number: user?.followers.length, label: 'Followers' },
+    { number: posts.length, label: 'Posts' },
+    { number: followers, label: 'Followers' },
     { number: user?.followings.length, label: 'Following' }
   ];
+  const handleFollow = async () => {
+    const response = await FollowAction(userDetail._id)
+    if (response.success) {
+      setIsFollowing(prev => !prev)
+      setFollowers(response.userFollowers.length)
+      console.log("Followers updated:", response.userFollowers.length);
+    }
+  }
 
   return (
     <div className="max-w-sm mx-auto bg-white min-h-screen border border-gray-200 relative">
       {/* Header */}
       <NavbarComponent profilePic={user?.profilePic} decode={decode} />
-      <Suspense>
-        {/* Profile Section */}
+
+      {/* Profile Section */}
       <section className="px-5 py-8 text-center border-b border-gray-100">
         <div className="w-30 h-30 rounded-full mx-auto mb-5 bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-4xl text-white font-bold shadow-lg">
-          <Image src={!user?.profilePic ? "/defaultProfile.png" : user?.profilePic} alt='Profile image' width={100} height={100} className='w-full h-full overflow-hidden rounded-full object-cover'></Image>
+          <Image src={!user?.profilePic ? "/defaultprofile" : user?.profilePic} alt='Profile image' width={100} height={100} className='w-full h-full overflow-hidden rounded-full object-cover'></Image>
         </div>
 
         <h2 className="text-2xl font-bold text-gray-900 mb-1">{user?.name}</h2>
@@ -47,10 +51,10 @@ export default function ProfileComponent({ response, decode }) {
         <p className="text-base text-gray-500 mb-5">Content Creator</p>
 
         <button
-          className="bg-gray-900 text-white px-10 py-3 rounded-full text-base font-semibold hover:bg-gray-700 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg mb-6"
-          onClick={() => router.push("/user/profile/edit")}
+          className={`bg-gray-900 text-white px-10 py-3 rounded-full text-base font-semibold hover:bg-gray-700 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg mb-6 ${isFollowing ? 'bg-gray-600' : 'bg-gray-900'}`}
+          onClick={handleFollow}
         >
-          Edit
+          {isFollowing ? "Followed" : "Follow"}
         </button>
 
         {/* Stats */}
@@ -68,9 +72,9 @@ export default function ProfileComponent({ response, decode }) {
       </section>
 
       {/* Bio */}
-      <div className="px-5 pb-5 text-center text-gray-700 text-sm leading-relaxed">
+      {/* <div className="px-5 pb-5 text-center text-gray-700 text-sm leading-relaxed">
         {user?.bio ? user.bio : "edit profile"}
-      </div>
+      </div> */}
 
 
       {/* Navigation Tabs */}
@@ -97,20 +101,16 @@ export default function ProfileComponent({ response, decode }) {
 
       {/* Content Grid */}
       <div className="grid grid-cols-2 gap-2 p-2 bg-gray-50 mb-15">
-        {!user ? "no post to see" : user.posts?.map((post: PostI) => (
-          <button
-            key={post._id.toString()}
+        {!posts ? "no post to see" : posts?.map((item: PostI) => (
+          <div
+            key={item._id as string}
             className="aspect-square bg-gray-200 rounded flex items-center justify-center text-4xl text-gray-600 font-bold cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-gray-300 "
-            onClick={() => router.push(`post/${post._id}`)}
+            onClick={() => router.push(`/post/${item._id}`)}
           >
-            {
-              post.file.endsWith(".mp4") ? <video controls src={post.file} className=' h-full object-contain w-full rounded'></video> :
-              <Image src={post.file} alt='post' width={100} height={100} className=' h-full object-contain w-full rounded'></Image>}
-          </button>
+            <Image src={item.file} alt='post' width={100} height={100} className=' h-full object-contain w-full rounded'></Image>
+          </div>
         ))}
       </div>
-      </Suspense>
-      
       <BottomNavbar />
     </div>
   );

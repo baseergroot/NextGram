@@ -1,5 +1,5 @@
-import ProfileComponent from "@/components/ProfileComponent";
-import ConnectDB from "@/lib/ConnectDb";
+import ProfileComponent from "@/components/user/ProfileComponent";
+import ConnectDB from "@/lib/database/ConnectDb";
 import loggedInUser from "@/helpers/getLoggedInUser";
 import Post from "@/models/PostModel";
 import User from "@/models/UserModel";

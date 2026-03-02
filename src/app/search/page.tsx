@@ -1,5 +1,5 @@
-import BottomNavbar from "@/components/BottomNavbar";
-import SearchComponent from "@/components/Search";
+import BottomNavbar from "@/components/share/BottomNavbar";
+import SearchComponent from "@/components/search/Search";
 
 export const metadata = {
   title: "NextGram | Search",

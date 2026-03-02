@@ -3,12 +3,12 @@ import Image from "next/image";
 import { FaComment } from "react-icons/fa";
 import LikeButton from "./LikeButton";
 import Link from "next/link";
-import SaveButton from "@/components/SaveButton"
+import SaveButton from "@/components/post/SaveButton"
 import { FeedProps } from "@/types/feedTypes";
 
 export default async function Feed({ posts, decode }: FeedProps) {
-  
-  const currentUser: string |  undefined = decode?.id?.toString()
+
+  const currentUser: string | undefined = decode?.id?.toString()
   return (
     <section className=" h-[100vh] w-full mb-10">
       <main className="bg-gray-100 h-full w-full overflow-auto">

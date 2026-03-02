@@ -1,4 +1,4 @@
-import ConnectDB from "@/lib/ConnectDb";
+import ConnectDB from "@/lib/database/ConnectDb";
 import { CommentI } from "@/types/CommentType";
 import { Model, model, models, Schema, Types } from "mongoose";
 

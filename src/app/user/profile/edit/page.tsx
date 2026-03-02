@@ -1,5 +1,5 @@
-import EditForm from "@/components/EditProfile";
-import ConnectDB from "@/lib/ConnectDb";
+import EditForm from "@/components/user/EditProfile";
+import ConnectDB from "@/lib/database/ConnectDb";
 import loggedInUser, { Decode } from "@/helpers/getLoggedInUser";
 import User from "@/models/UserModel";
 import { UserI } from "@/types/UserType";

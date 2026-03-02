@@ -2,19 +2,19 @@
 import User from "@/models/UserModel";
 import { cookies } from "next/headers"
 import { sign } from "jsonwebtoken"
-import ConnectDB from "@/lib/ConnectDb";
+import ConnectDB from "@/lib/database/ConnectDb";
 import { genSalt, hash } from 'bcrypt'
 import { z } from "zod";
 import { redirect } from "next/navigation";
 
 const SignUpSchema = z.object({
   name: z.string()
-  .min(4, "Name is too short, should be atleast 4 characters")
-  .max(15, "Name is too long, no more than 15 characters"),
+    .min(4, "Name is too short, should be atleast 4 characters")
+    .max(15, "Name is too long, no more than 15 characters"),
   username: z.string()
-  .min(4, "Username is too short, should be atleast 4 characters")
-  .max(15, "Username is too long, no more than 15 characters")
-  .regex(/^[a-z0-9._]{4,15}$/, "Username can only contain lowercase letters, numbers, dots, and underscores"),
+    .min(4, "Username is too short, should be atleast 4 characters")
+    .max(15, "Username is too long, no more than 15 characters")
+    .regex(/^[a-z0-9._]{4,15}$/, "Username can only contain lowercase letters, numbers, dots, and underscores"),
 })
 
 await ConnectDB()

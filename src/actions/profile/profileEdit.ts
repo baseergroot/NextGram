@@ -1,5 +1,5 @@
 "use server"
-import ConnectDB from "@/lib/ConnectDb";
+import ConnectDB from "@/lib/database/ConnectDb";
 import loggedInUser, { Decode } from "@/helpers/getLoggedInUser";
 import User from "@/models/UserModel";
 

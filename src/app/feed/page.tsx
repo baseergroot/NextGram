@@ -1,8 +1,8 @@
 
-import BottomNavbar from "@/components/BottomNavbar"
-import NavbarComponent from "@/components/Navbar"
+import BottomNavbar from "@/components/share/BottomNavbar"
+import NavbarComponent from "@/components/share/Navbar"
 import loggedInUser from "@/helpers/getLoggedInUser";
-import Feed from "@/components/Feed";
+import Feed from "@/components/post/Feed";
 import getposts from "@/helpers/getPosts";
 
 const Page = async () => {
@@ -23,7 +23,7 @@ const Page = async () => {
 				No Post to be shown
 			</p>
 		)
-	} 
+	}
 
 	return (
 		<div className="w-full h-full flex flex-col gap-0.5 scroll-smooth ">

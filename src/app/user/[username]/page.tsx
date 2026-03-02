@@ -1,5 +1,5 @@
-import UserComponent from "@/components/UserComponent"
-import ConnectDB from "@/lib/ConnectDb"
+import UserComponent from "@/components/user/UserComponent"
+import ConnectDB from "@/lib/database/ConnectDb"
 import loggedInUser, { Decode } from "@/helpers/getLoggedInUser"
 import Post from "@/models/PostModel"
 import User from "@/models/UserModel"

@@ -1,4 +1,4 @@
-import ConnectDB from "@/lib/ConnectDb";
+import ConnectDB from "@/lib/database/ConnectDb";
 import redis from "@/lib/redis/client";
 import Post from "@/models/PostModel";
 import { IPost } from "@/types/PostType";

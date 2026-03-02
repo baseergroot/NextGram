@@ -1,7 +1,7 @@
 "use client"
 import axios from 'axios';
 import React, { useState, useEffect, Fragment } from 'react';
-import BottomNavbar from "@/components/BottomNavbar"
+import BottomNavbar from "@/components/share/BottomNavbar"
 import { Saved } from '@/actions/post/savedPosts';
 import Image from 'next/image';
 
@@ -169,8 +169,8 @@ export default function SavedPostsPage() {
       <nav className="flex border-b border-gray-100 bg-white sticky top-16 z-10">
         <button
           className={`flex-1 py-4 px-6 text-sm font-semibold transition-all duration-300 relative ${activeTab === 'all'
-              ? 'text-gray-900'
-              : 'text-gray-600 hover:text-gray-800'
+            ? 'text-gray-900'
+            : 'text-gray-600 hover:text-gray-800'
             }`}
           onClick={() => setActiveTab('all')}
         >
